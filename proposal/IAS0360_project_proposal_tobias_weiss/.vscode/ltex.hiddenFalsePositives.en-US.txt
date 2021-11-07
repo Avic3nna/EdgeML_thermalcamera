@@ -1,0 +1,1 @@
+{"rule":"PHRASE_REPETITION","sentence":"^\\QOn an operational level we apply the Cross Industry Standard Process for Data Mining (CRISP-DM) framework comprising the following steps: Business understanding Data understanding Data preparation Modeling Evaluation Deployment\\E$"}
