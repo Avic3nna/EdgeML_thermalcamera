@@ -12,8 +12,6 @@ using a thermal sensor. As such, the project is an object
 detection task.
 
 ## Deadline
-Proposal: 08.11.2021 23:59
-
 Presentation: 13.12.2021
     
 Final paper: 07.01.2021 23:59
@@ -28,10 +26,8 @@ https://docs.google.com/presentation/d/1TLgBtyyDolK1EsZuQ53GfDV2xGOMiX9MA92Uc6CJ
 All the data is now in the repo. It is just a few MB.
 
 ## Labelling
-Tobias: I suggest using`scripts/step1-data-understanding.ipynb`.
-Please have a look and give me feedback.
-Please also think about the possible classes. 
-I made some suggestions but these are debateable.
-In my opinion it is better, if we go into more detail.
-We can derive binary classification (Human/Non-human) easily from a finer discrimination.
+Tobias: We consented to use `scripts/step1-data-understanding.ipynb`.
+The sensors are treated independently, i.e., pictures with (alsmost) equal time stamps are not related to each other.
+For manual annotation we show preceding and subsequent pictures to make the judgement easier.
+We can derive binary classification (Human/Non-human) easily from the finer discrimination.
 
