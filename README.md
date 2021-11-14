@@ -11,8 +11,16 @@ can be distinguished from other heat emitting objects
 using a thermal sensor. As such, the project is an object
 detection task.
 
+## Deadline
+Proposal: 08.11.2021 23:59
+Presentation: 13.12.2021
+Final paper: 07.01.2021 23:59
+
 ## Report
 https://www.overleaf.com/project/617665ffbc94254cf8ec4a41
+
+## Presentation
+https://docs.google.com/presentation/d/1TLgBtyyDolK1EsZuQ53GfDV2xGOMiX9MA92Uc6CJ1BQ/edit?usp=sharing
 
 ## Data
 All the data is now in the repo. It is just a few MB.
