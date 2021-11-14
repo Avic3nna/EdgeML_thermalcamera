@@ -13,7 +13,9 @@ detection task.
 
 ## Deadline
 Proposal: 08.11.2021 23:59
+
 Presentation: 13.12.2021
+    
 Final paper: 07.01.2021 23:59
 
 ## Report
