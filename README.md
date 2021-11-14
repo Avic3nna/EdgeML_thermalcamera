@@ -27,7 +27,7 @@ All the data is now in the repo. It is just a few MB.
 
 ## Labelling
 Tobias: We consented to use `scripts/step1-data-understanding.ipynb`.
-The sensors are treated independently, i.e., pictures with (alsmost) equal time stamps are not related to each other.
+The sensors are treated independently, i.e., pictures with (almost) equal time stamps are not related to each other.
 For manual annotation we show preceding and subsequent pictures to make the judgement easier.
 We can derive binary classification (Human/Non-human) easily from the finer discrimination.
 
