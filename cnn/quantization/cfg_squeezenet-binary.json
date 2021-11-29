@@ -1,0 +1,18 @@
+{
+        "model_name": "squeezenet-binary",
+        "path_to_floatingpoint_h5": "squeezenet-binary.h5",
+        "quant_test_set_dir":"",
+        "quant_test_ratio": "0.2",
+        "evaluation_test_set_dir": "",
+        "batch_size": "16",
+        "modules_directory": "squeezenet-binary_modules",
+        "filename_test_set_generation": "test_set_generation.py",
+        "filename_quantizer_algos": "quantizer_algos_user.py",
+        "algorithm": "MinMax",
+		"arithmetic": "Integer",
+        "weights_integer_scheme": "SignedSymmetric",
+        "activations_integer_scheme": "SignedAsymmetric",
+		"per_channel": "True",
+        "output_directory": "out",
+		"remove_timestamp": "True"
+}
