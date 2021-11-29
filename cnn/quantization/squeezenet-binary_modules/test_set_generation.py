@@ -10,11 +10,9 @@
 #######################################################################################################################
 import os
 import numpy as np
-import pandas as pd
 import tensorflow as tf
 # from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.utils import to_categorical
-from sklearn.model_selection import train_test_split
 
 ###############################################################################################
 # wrapper function
@@ -22,19 +20,19 @@ from sklearn.model_selection import train_test_split
 def create_test_generator(quant_test_set_dir, evaluation_test_set_dir, quant_test_ratio, batch_size):
 
     ########## MNIST example
-    #x_testset,y_testset = load_mnist(quant_test_set_dir)
-    x_testset,y_testset = load_data(quant_test_set_dir)
+    #X_testset,y_testset = load_mnist(quant_test_set_dir)
+    X_testset,y_testset = load_data(quant_test_set_dir)
 
     # quantization test-set
-    quant_test_set_size = int(np.floor(len(x_testset)*quant_test_ratio))
+    quant_test_set_size = int(np.floor(len(X_testset)*quant_test_ratio))
     np.random.seed(10)
-    random_partition_quant_test_set = np.random.permutation(len(x_testset))
+    random_partition_quant_test_set = np.random.permutation(len(X_testset))
     list_idx_input_quant = random_partition_quant_test_set[:quant_test_set_size]
 
     ####################################################################################################
     # Example with GenericInputBatchGenerator
     ####################################################################################################
-    quant_datagen = GenericInputBatchGenerator(input=x_testset[list_idx_input_quant],
+    quant_datagen = GenericInputBatchGenerator(input=X_testset[list_idx_input_quant],
                                                labels=y_testset[list_idx_input_quant],
                                                batch_size=batch_size, shuffle=False)
     quant_test_set_labeled = quant_datagen.flow_labeled()
@@ -46,9 +44,9 @@ def create_test_generator(quant_test_set_dir, evaluation_test_set_dir, quant_tes
     # Example with keras API ImageDataGenerator, very practical for 4D tensors inputs (batch, H, W, C)
     ####################################################################################################
     # quant_datagen = ImageDataGenerator(validation_split=quant_test_ratio-0.0001)
-    # quant_test_set_labeled = quant_datagen.flow(x_testset, y_testset, batch_size=batch_size, shuffle=False, subset="validation")
+    # quant_test_set_labeled = quant_datagen.flow(X_testset, y_testset, batch_size=batch_size, shuffle=False, subset="validation")
     # #quant_test_set_labeled = None if no labels
-    # quant_test_set_unlabeled = quant_datagen.flow(x_testset, batch_size=batch_size, subset="validation")
+    # quant_test_set_unlabeled = quant_datagen.flow(X_testset, batch_size=batch_size, subset="validation")
     # quant_nsteps = len(quant_test_set_unlabeled)
 
     # evaluation test-set
@@ -57,8 +55,8 @@ def create_test_generator(quant_test_set_dir, evaluation_test_set_dir, quant_tes
     # Example with GenericInputBatchGenerator
     ####################################################################################################
     list_idx_input_eval = []
-    [list_idx_input_eval.append(idx) for idx in np.arange(len(x_testset)) if idx not in list_idx_input_quant]
-    eval_datagen = GenericInputBatchGenerator(input=x_testset[list_idx_input_eval], labels=y_testset[list_idx_input_eval],
+    [list_idx_input_eval.append(idx) for idx in np.arange(len(X_testset)) if idx not in list_idx_input_quant]
+    eval_datagen = GenericInputBatchGenerator(input=X_testset[list_idx_input_eval], labels=y_testset[list_idx_input_eval],
                                               batch_size=batch_size, shuffle=False)
     eval_test_set_labeled = eval_datagen.flow_labeled()
     # eval_test_set_labeled = None if no labels
@@ -120,26 +118,26 @@ def load_mnist(test_dir):
     if not os.path.isfile(fdata_set):
         print('Upload the nmist data set with Keras service...')
         mnist_ = tf.keras.datasets.mnist
-        _, (x_test, y_test) = mnist_.load_data()
+        _, (X_test, y_test) = mnist_.load_data()
     else:    
         print('Use the data set {}'.format(fdata_set))
         arrays = np.load(os.path.join(fdata_set))
-        x_test, y_test = arrays['x_test'], arrays['y_test']
+        X_test, y_test = arrays['X_test'], arrays['y_test']
 
-    msize = min(1000, len(x_test))
+    msize = min(1000, len(X_test))
     np.random.seed(2)  # deterministic results
-    rchoice = np.random.choice(len(x_test), size=msize,
+    rchoice = np.random.choice(len(X_test), size=msize,
                                    replace=False) 
 
-    x_test, y_test = x_test[rchoice], y_test[rchoice] 
+    X_test, y_test = X_test[rchoice], y_test[rchoice] 
 
-    x_test = x_test.reshape((-1, ) + MNIST_SHAPE).astype('float32') / 255
+    X_test = X_test.reshape((-1, ) + MNIST_SHAPE).astype('float32') / 255
     y_test = to_categorical(y_test, N_CLASSES)
 
-    print('x_test', x_test.shape)
+    print('X_test', X_test.shape)
     print('y_test', y_test.shape)
 
-    return x_test, y_test
+    return X_test, y_test
 
 
 def load_data(test_dir):
@@ -147,28 +145,26 @@ def load_data(test_dir):
     SHAPE = (32, 32, 1)
     N_CLASSES = 2
 
-    df = pd.read_json('../data/labelled_data/prepared-samples-binary.json')
+    import pickle
 
-    y = df['label'].to_numpy()
-    X = np.array(df['data'].to_list())
-    X = np.expand_dims(X, axis=3)
+    with open('../X_test.pkl', 'rb') as fh:
+        X_test = pickle.load(fh)
 
-    # Create train / val / test split
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-    X_val, X_test, y_val, y_test = train_test_split(X_test, y_test, test_size=0.5, random_state=0)
+    with open('../y_test.pkl', 'rb') as fh:
+        y_test = pickle.load(fh)
 
-    msize = min(1000, len(x_test))
+    msize = min(1000, len(X_test))
     np.random.seed(2)  # deterministic results
-    rchoice = np.random.choice(len(x_test), size=msize,
+    rchoice = np.random.choice(len(X_test), size=msize,
                                    replace=False) 
 
-    x_test, y_test = x_test[rchoice], y_test[rchoice] 
+    X_test, y_test = X_test[rchoice], y_test[rchoice] 
 
-    x_test = x_test.reshape((-1, ) + SHAPE).astype('float32') / 255
+    X_test = X_test.reshape((-1, ) + SHAPE).astype('float32') / 255
     y_test = to_categorical(y_test, N_CLASSES)
 
-    print('x_test', x_test.shape)
+    print('X_test', X_test.shape)
     print('y_test', y_test.shape)
 
-    return x_test, y_test
+    return X_test, y_test
 

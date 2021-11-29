@@ -1,0 +1,317 @@
+{
+    "_allocate_inputs": 0,
+    "_allocate_outputs": 0,
+    "cli_parameters": "analyze --name simplecnn -m /home/weiss/git/masteree/IAS0360_Machine_Learning_for_Embedded_Systems/IAS0360_lab_excercises/Lab_06/simpleCnn.tflite --type tflite --compression 1 --verbosity 1 --workspace /tmp/mxAI_workspace15066067310993914884963171667915156 --output /home/weiss/.stm32cubemx",
+    "cli_version": {
+        "major": 1,
+        "micro": 1,
+        "minor": 5
+    },
+    "cli_version_str": "1.5.1",
+    "compression": {
+        "factor": null,
+        "layers": {}
+    },
+    "date_time": "Sat Nov 13 16:06:09 2021",
+    "error": 0,
+    "error_str": [],
+    "exec_cmd": "analyze",
+    "exec_duration": 0.0,
+    "hash": "bd24118b02522f54f7f65c8e0ac7335f",
+    "inputs": [
+        "serving_default_conv2d_input0"
+    ],
+    "layers": [
+        {
+            "extras": {
+                "n_macc": 0,
+                "n_params": 0,
+                "psize": 0,
+                "rom_output": {
+                    "c_size": 784,
+                    "fmt": {
+                        "format": "int8_t"
+                    },
+                    "shape": [
+                        28,
+                        28,
+                        1,
+                        1
+                    ]
+                },
+                "rom_size": 0
+            },
+            "id": 0,
+            "inputs": [],
+            "name": "serving_default_conv2d_input0",
+            "type": "Input"
+        },
+        {
+            "extras": {
+                "n_macc": 194720,
+                "n_params": 320,
+                "psize": 416,
+                "rom_output": {
+                    "c_size": 5408,
+                    "fmt": {
+                        "format": "int8_t"
+                    },
+                    "shape": [
+                        13,
+                        13,
+                        32,
+                        1
+                    ]
+                },
+                "rom_size": 416
+            },
+            "id": 0,
+            "inputs": [
+                "serving_default_conv2d_input0"
+            ],
+            "name": "conv2d_0",
+            "type": "Conv2D"
+        },
+        {
+            "extras": {
+                "n_macc": 21632,
+                "n_params": 0,
+                "psize": 0,
+                "rom_size": 0
+            },
+            "id": 0,
+            "inputs": [
+                "conv2d_0"
+            ],
+            "name": "nl_0_nl",
+            "type": "Nonlinearity"
+        },
+        {
+            "extras": {
+                "n_macc": 21632,
+                "n_params": 0,
+                "psize": 0,
+                "rom_size": 0
+            },
+            "id": 1,
+            "inputs": [
+                "nl_0_nl"
+            ],
+            "name": "pool_1",
+            "type": "Pool"
+        },
+        {
+            "extras": {
+                "n_macc": 2230336,
+                "n_params": 18496,
+                "psize": 18688,
+                "rom_output": {
+                    "c_size": 1600,
+                    "fmt": {
+                        "format": "int8_t"
+                    },
+                    "shape": [
+                        5,
+                        5,
+                        64,
+                        1
+                    ]
+                },
+                "rom_size": 18688
+            },
+            "id": 2,
+            "inputs": [
+                "pool_1"
+            ],
+            "name": "conv2d_2",
+            "type": "Conv2D"
+        },
+        {
+            "extras": {
+                "n_macc": 7744,
+                "n_params": 0,
+                "psize": 0,
+                "rom_size": 0
+            },
+            "id": 2,
+            "inputs": [
+                "conv2d_2"
+            ],
+            "name": "nl_2_nl",
+            "type": "Nonlinearity"
+        },
+        {
+            "extras": {
+                "n_macc": 6400,
+                "n_params": 0,
+                "psize": 0,
+                "rom_size": 0
+            },
+            "id": 3,
+            "inputs": [
+                "nl_2_nl"
+            ],
+            "name": "pool_3",
+            "type": "Pool"
+        },
+        {
+            "extras": {
+                "n_macc": 0,
+                "n_params": 0,
+                "psize": 0,
+                "rom_size": 0
+            },
+            "id": 4,
+            "inputs": [
+                "pool_3"
+            ],
+            "name": "reshape_4",
+            "type": "Reshape"
+        },
+        {
+            "extras": {
+                "n_macc": 51232,
+                "n_params": 51232,
+                "psize": 51328,
+                "rom_output": {
+                    "c_size": 32,
+                    "fmt": {
+                        "format": "int8_t"
+                    },
+                    "shape": [
+                        1,
+                        1,
+                        32,
+                        1
+                    ]
+                },
+                "rom_size": 51328
+            },
+            "id": 5,
+            "inputs": [
+                "reshape_4"
+            ],
+            "name": "dense_5",
+            "type": "Dense"
+        },
+        {
+            "extras": {
+                "n_macc": 32,
+                "n_params": 0,
+                "psize": 0,
+                "rom_size": 0
+            },
+            "id": 5,
+            "inputs": [
+                "dense_5"
+            ],
+            "name": "nl_5_nl",
+            "type": "Nonlinearity"
+        },
+        {
+            "extras": {
+                "n_macc": 330,
+                "n_params": 330,
+                "psize": 360,
+                "rom_output": {
+                    "c_size": 10,
+                    "fmt": {
+                        "format": "int8_t"
+                    },
+                    "shape": [
+                        1,
+                        1,
+                        10,
+                        1
+                    ]
+                },
+                "rom_size": 360
+            },
+            "id": 6,
+            "inputs": [
+                "nl_5_nl"
+            ],
+            "name": "dense_6",
+            "type": "Dense"
+        },
+        {
+            "extras": {
+                "n_macc": 150,
+                "n_params": 0,
+                "psize": 0,
+                "rom_output": {
+                    "c_size": 40,
+                    "fmt": {
+                        "format": "float"
+                    },
+                    "shape": [
+                        1,
+                        1,
+                        10,
+                        1
+                    ]
+                },
+                "rom_size": 0
+            },
+            "id": 7,
+            "inputs": [
+                "dense_6"
+            ],
+            "name": "nl_7",
+            "type": "Nonlinearity"
+        }
+    ],
+    "model_files": [
+        "/home/weiss/git/masteree/IAS0360_Machine_Learning_for_Embedded_Systems/IAS0360_lab_excercises/Lab_06/simpleCnn.tflite"
+    ],
+    "model_n_params": 70378,
+    "model_name": "simpleCnn",
+    "model_size": 70792,
+    "model_type": "tflite",
+    "name": "simplecnn",
+    "outputs": [
+        "nl_7"
+    ],
+    "ram_io_size": [
+        784,
+        10
+    ],
+    "ram_size": [
+        14368,
+        14368
+    ],
+    "report_version": 1.1,
+    "rom_cfact": 1.0,
+    "rom_heap_inspector": 2048,
+    "rom_inputs": [
+        {
+            "c_size": 784,
+            "c_type": "int8_t",
+            "name": "serving_default_conv2d_input0"
+        }
+    ],
+    "rom_n_macc": 2504840,
+    "rom_outputs": [
+        {
+            "c_size": 10,
+            "c_type": "int8_t",
+            "name": "nl_7_fmt_conv"
+        }
+    ],
+    "rom_size": 70792,
+    "strategy": "heap_overlay",
+    "tools_api_version": {
+        "major": 1,
+        "micro": 1,
+        "minor": 5
+    },
+    "tools_version": {
+        "extra": "RC8",
+        "major": 7,
+        "micro": 0,
+        "minor": 0
+    },
+    "val_error": -1.0,
+    "val_error_desc": "None (None) #-1",
+    "val_metrics": []
+}
