@@ -33,7 +33,6 @@
 "./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o"
 "./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o"
 "./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_fmc.o"
-"./Src/X_test.o"
 "./Src/crc.o"
 "./Src/dma2d.o"
 "./Src/fmc.o"
@@ -50,5 +49,4 @@
 "./Src/system_stm32f4xx.o"
 "./Src/tim.o"
 "./Src/usart.o"
-"./Src/y_test.o"
 "./startup/startup_stm32f429xx.o"

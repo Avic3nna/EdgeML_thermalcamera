@@ -43,8 +43,11 @@
 #include "network.h"
 #include "network_data.h"
 
-#include "X_test.c"
-#include "y_test.c"
+#include "X_test.h"
+#include "y_test.h"
+
+extern float X_train[20][1024];
+extern float y_train[];
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -213,21 +216,33 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+	int image_idx = 0;
 	while (1) {
 
 		if (BSP_PB_GetState(BUTTON_KEY)) {
-			printf("NN processing...");
-			// Execute inference
+			user_interface_reset();
 
 			// Show image
-			for(int x=0; x<32, x++){
-				for(int y=0; y<32, y++){
-				BSP_LCD_SetTextColor(0xFFFFFF00+x);
-				BSP_LCD_FillRect(64+(x*4), 64+(y*4), 4, 4);
+			int color = 0xFFFFFFFF;
+			for(int x=0; x<32; x++){
+				for(int y=0; y<32; y++){
+					int repr_data = (int)( X_test[image_idx][(int)(x*32+y)]*10);
+					if (repr_data == 150) {
+						color = LCD_COLOR_GRAY;
+					}
+					else if (repr_data >= 255) {
+						color = LCD_COLOR_RED;
+					}
+					else {
+						// shift to the RR Position of BBRRGGBB
+						color = 0xFF000000 | (repr_data << 16);
+					}
+					BSP_LCD_SetTextColor(color);
+					BSP_LCD_FillRect(64+(x*4), 64+(y*4), 4, 4);
 				}
 			}
 
-
+			// Execute inference
 			aiRun(in_data, out_data);
 
 			for (int i = 0; i < NUM_CLASSES; i++) {
@@ -253,13 +268,22 @@ int main(void)
 			BSP_LCD_SetFont(&Font20);
 			BSP_LCD_SetBackColor(LCD_COLOR_LIGHTCYAN);
 
-			// Display predicted class
+			// TODO: Display predicted class
 			sprintf(_1st_pred_str, "Pred.: %d", _1st_pred.label);
 			BSP_LCD_DisplayStringAt(10, 240, (uint8_t*) _1st_pred_str, CENTER_MODE);
 
 			// Display real class
-			sprintf(_1st_pred_str, "Truth: %d", _1st_pred.label);
+			sprintf(_1st_pred_str, "Truth: %d", y_test[image_idx]);
 			BSP_LCD_DisplayStringAt(10, 260, (uint8_t*) _1st_pred_str, CENTER_MODE);
+
+			// TODO: Display inference time
+			sprintf(_1st_pred_str, "Time: %.1f", _1st_pred.prob);
+			BSP_LCD_DisplayStringAt(10, 280, (uint8_t*) _1st_pred_str, CENTER_MODE);
+
+			// count to next image and start from 0 when at the end
+			image_idx += 1;
+			image_idx %= 20;
+
 		}
 
     /* USER CODE END WHILE */

@@ -5,7 +5,6 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Src/X_test.c \
 ../Src/crc.c \
 ../Src/dma2d.c \
 ../Src/fmc.c \
@@ -21,11 +20,9 @@ C_SRCS += \
 ../Src/stm32f4xx_it.c \
 ../Src/system_stm32f4xx.c \
 ../Src/tim.c \
-../Src/usart.c \
-../Src/y_test.c 
+../Src/usart.c 
 
 C_DEPS += \
-./Src/X_test.d \
 ./Src/crc.d \
 ./Src/dma2d.d \
 ./Src/fmc.d \
@@ -41,11 +38,9 @@ C_DEPS += \
 ./Src/stm32f4xx_it.d \
 ./Src/system_stm32f4xx.d \
 ./Src/tim.d \
-./Src/usart.d \
-./Src/y_test.d 
+./Src/usart.d 
 
 OBJS += \
-./Src/X_test.o \
 ./Src/crc.o \
 ./Src/dma2d.o \
 ./Src/fmc.o \
@@ -61,8 +56,7 @@ OBJS += \
 ./Src/stm32f4xx_it.o \
 ./Src/system_stm32f4xx.o \
 ./Src/tim.o \
-./Src/usart.o \
-./Src/y_test.o 
+./Src/usart.o 
 
 
 # Each subdirectory must supply rules for building sources it contributes

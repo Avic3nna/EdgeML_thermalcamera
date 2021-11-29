@@ -50,7 +50,7 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
  /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Drivers/BSP/STM32F429I-Discovery/../Components/stmpe811/../Common/io.h \
  ../Inc/network.h ../Inc/network_config.h \
  /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/ST/AI/Inc/ai_platform.h \
- ../Inc/network_data.h
+ ../Inc/network_data.h ../Src/X_test.h ../Src/y_test.h
 
 ../Inc/main.h:
 
@@ -175,3 +175,7 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
 /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/ST/AI/Inc/ai_platform.h:
 
 ../Inc/network_data.h:
+
+../Src/X_test.h:
+
+../Src/y_test.h:
