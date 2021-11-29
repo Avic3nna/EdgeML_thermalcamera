@@ -96,14 +96,14 @@ void HAL_LTDC_MspInit(LTDC_HandleTypeDef* ltdcHandle)
   /* USER CODE END LTDC_MspInit 0 */
   /** Initializes the peripherals clock
   */
-/*    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC;
-    PeriphClkInitStruct.PLLSAI.PLLSAIN = 50;
-    PeriphClkInitStruct.PLLSAI.PLLSAIR = 2;
-    PeriphClkInitStruct.PLLSAIDivR = RCC_PLLSAIDIVR_2;
-    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
-    {
-      Error_Handler();
-    }*/
+//    PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC;
+//    PeriphClkInitStruct.PLLSAI.PLLSAIN = 50;
+//    PeriphClkInitStruct.PLLSAI.PLLSAIR = 2;
+//    PeriphClkInitStruct.PLLSAIDivR = RCC_PLLSAIDIVR_2;
+//    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+//    {
+//      Error_Handler();
+//    }
 
     /* LTDC clock enable */
     __HAL_RCC_LTDC_CLK_ENABLE();
