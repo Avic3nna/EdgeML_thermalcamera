@@ -43,7 +43,7 @@
 #include "network_config.h"
 #include "network_tflite_data.h"
 
-/* Start of Tiny ML includes */
+/* Start of TF lite micro includes */
 #include "tensorflow/lite/c/c_api_types.h"
 #include "tensorflow/lite/version.h"
 
