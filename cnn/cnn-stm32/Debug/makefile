@@ -11,6 +11,25 @@ RM := rm -rf
 -include sources.mk
 -include startup/subdir.mk
 -include Src/subdir.mk
+-include Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions/subdir.mk
+-include Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Source/SVDFunctions/subdir.mk
+-include Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Source/ReshapeFunctions/subdir.mk
+-include Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Source/PoolingFunctions/subdir.mk
+-include Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions/subdir.mk
+-include Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Source/FullyConnectedFunctions/subdir.mk
+-include Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions/subdir.mk
+-include Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Source/ConcatenationFunctions/subdir.mk
+-include Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Source/BasicMathFunctions/subdir.mk
+-include Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Source/ActivationFunctions/subdir.mk
+-include Middlewares/tensorflow/tensorflow/lite/schema/subdir.mk
+-include Middlewares/tensorflow/tensorflow/lite/micro/memory_planner/subdir.mk
+-include Middlewares/tensorflow/tensorflow/lite/micro/kernels/cmsis_nn/subdir.mk
+-include Middlewares/tensorflow/tensorflow/lite/micro/kernels/subdir.mk
+-include Middlewares/tensorflow/tensorflow/lite/micro/subdir.mk
+-include Middlewares/tensorflow/tensorflow/lite/kernels/internal/subdir.mk
+-include Middlewares/tensorflow/tensorflow/lite/kernels/subdir.mk
+-include Middlewares/tensorflow/tensorflow/lite/core/api/subdir.mk
+-include Middlewares/tensorflow/tensorflow/lite/c/subdir.mk
 -include Drivers/STM32F4xx_HAL_Driver/Src/subdir.mk
 -include Drivers/BSP/STM32F429I-Discovery/subdir.mk
 -include Drivers/BSP/Components/stmpe811/subdir.mk
@@ -81,7 +100,7 @@ main-build: ias0360-final-project.elf secondary-outputs
 
 # Tool invocations
 ias0360-final-project.elf: $(OBJS) $(USER_OBJS) ../STM32F429ZITx_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-g++ -o "ias0360-final-project.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"../STM32F429ZITx_FLASH.ld" --specs=nosys.specs -Wl,-Map="ias0360-final-project.map" -Wl,--gc-sections -static -L../Middlewares/ST/AI/Lib -u _printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+	arm-none-eabi-g++ -o "ias0360-final-project.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"../STM32F429ZITx_FLASH.ld" --specs=nosys.specs -Wl,-Map="ias0360-final-project.map" -Wl,--gc-sections -static -u _printf_float --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
