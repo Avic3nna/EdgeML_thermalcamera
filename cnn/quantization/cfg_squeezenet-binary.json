@@ -1,6 +1,6 @@
 {
         "model_name": "squeezenet-binary",
-        "path_to_floatingpoint_h5": "../simpleCnn-sequential-binary.h5",
+        "path_to_floatingpoint_h5": "../models/squeezenet-binary.h5",
         "quant_test_set_dir":"",
         "quant_test_ratio": "0.2",
         "evaluation_test_set_dir": "",

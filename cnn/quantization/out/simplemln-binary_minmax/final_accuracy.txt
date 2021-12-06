@@ -1,0 +1,1 @@
+Final accuracy of quantized model: 0.5

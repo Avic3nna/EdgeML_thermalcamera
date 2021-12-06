@@ -35,6 +35,25 @@ Drivers/BSP/Components/ili9341 \
 Drivers/BSP/Components/stmpe811 \
 Drivers/BSP/STM32F429I-Discovery \
 Drivers/STM32F4xx_HAL_Driver/Src \
+Middlewares/tensorflow/tensorflow/lite/c \
+Middlewares/tensorflow/tensorflow/lite/core/api \
+Middlewares/tensorflow/tensorflow/lite/kernels/internal \
+Middlewares/tensorflow/tensorflow/lite/kernels \
+Middlewares/tensorflow/tensorflow/lite/micro \
+Middlewares/tensorflow/tensorflow/lite/micro/kernels \
+Middlewares/tensorflow/tensorflow/lite/micro/kernels/cmsis_nn \
+Middlewares/tensorflow/tensorflow/lite/micro/memory_planner \
+Middlewares/tensorflow/tensorflow/lite/schema \
+Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Source/ActivationFunctions \
+Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Source/BasicMathFunctions \
+Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Source/ConcatenationFunctions \
+Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Source/ConvolutionFunctions \
+Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Source/FullyConnectedFunctions \
+Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Source/NNSupportFunctions \
+Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Source/PoolingFunctions \
+Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Source/ReshapeFunctions \
+Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Source/SVDFunctions \
+Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Source/SoftmaxFunctions \
 Src \
 startup \
 

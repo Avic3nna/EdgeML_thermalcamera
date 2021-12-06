@@ -88,7 +88,7 @@ void HAL_LTDC_MspInit(LTDC_HandleTypeDef* ltdcHandle)
 {
 
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
+  //RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
   if(ltdcHandle->Instance==LTDC)
   {
   /* USER CODE BEGIN LTDC_MspInit 0 */

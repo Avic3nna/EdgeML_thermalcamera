@@ -1,0 +1,36 @@
+tflm_c.cc:337:33:void __tcf_0()	0	static
+tflm_c.cc:70:3:CTfLiteProfiler::~CTfLiteProfiler()	0	static
+tflm_c.cc:70:3:virtual CTfLiteProfiler::~CTfLiteProfiler()	8	static
+tflm_c.cc:152:7:CTfLiteAllocator::~CTfLiteAllocator()	8	static
+tflm_c.cc:152:7:virtual CTfLiteAllocator::~CTfLiteAllocator()	8	static
+tflm_c.cc:266:14:TfLiteStatus CTfLiteInterpreterContext::tflitetensor_to(const TfLiteTensor*, tflm_c_tensor_info*, int32_t)	0	static
+tflm_c.cc:371:14:TfLiteStatus tflm_c_destroy(uint32_t)	8	static
+tflm_c.cc:390:14:TfLiteStatus tflm_c_input(uint32_t, int32_t, tflm_c_tensor_info*)	16	static
+tflm_c.cc:395:14:TfLiteStatus tflm_c_output(uint32_t, int32_t, tflm_c_tensor_info*)	16	static
+tflm_c.cc:400:14:TfLiteStatus tflm_c_invoke(uint32_t)	8	static
+tflm_c.cc:405:14:TfLiteStatus tflm_c_reset_all_variables(uint32_t)	8	static
+tflm_c.cc:416:9:int32_t tflm_c_tensors_size(uint32_t)	0	static
+tflm_c.cc:422:9:int32_t tflm_c_arena_used_bytes(uint32_t)	8	static
+tflm_c.cc:428:13:const char* tflm_c_TfLiteTypeGetName(TfLiteType)	8	static
+tflm_c.cc:433:6:void tflm_c_rt_version(tflm_c_version*)	0	static
+tflm_c.cc:443:14:TfLiteStatus tflm_c_observer_register(uint32_t, tflm_c_observer_options*)	0	static
+tflm_c.cc:448:14:TfLiteStatus tflm_c_observer_unregister(uint32_t, tflm_c_observer_options*)	0	static
+tflm_c.cc:453:14:TfLiteStatus tflm_c_observer_start(uint32_t)	8	static
+tflm_c.cc:458:14:TfLiteStatus tflm_c_observer_info(uint32_t, tflm_c_profile_info*)	8	static
+tflm_c.cc:463:10:uint32_t CTfLiteProfiler::begin_event(const char*)	24	static
+tflm_c.cc:72:12:virtual uint32_t CTfLiteProfiler::BeginEvent(const char*)	8	static
+tflm_c.cc:474:6:void CTfLiteProfiler::end_event(uint32_t)	112	static
+tflm_c.cc:79:8:virtual void CTfLiteProfiler::EndEvent(uint32_t)	8	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = long unsigned int]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = long unsigned int]	8	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = long int]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = long int]	8	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = short unsigned int]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = short unsigned int]	8	static
+tflm_c.cc:384:9:int32_t tflm_c_outputs_size(uint32_t)	16	static
+tflm_c.cc:378:9:int32_t tflm_c_inputs_size(uint32_t)	16	static
+tflm_c.cc:410:9:int32_t tflm_c_operators_size(uint32_t)	16	static
+flatbuffers.h:2097:25:T* flatbuffers::GetMutableRoot(void*) [with T = tflite::Model]	8	static
+flatbuffers.h:2104:31:const T* flatbuffers::GetRoot(const void*) [with T = tflite::Model]	8	static
+tflm_c.cc:317:14:TfLiteStatus tflm_c_create(const uint8_t*, uint8_t*, uint32_t, uint32_t*)	48	static
+tflm_c.cc:167:20:virtual uint8_t* CTfLiteAllocator::AllocateFromTail(size_t, size_t)	8	static
