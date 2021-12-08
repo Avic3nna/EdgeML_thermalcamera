@@ -1,13 +1,13 @@
 Neural Network Tools for STM32AI v1.5.1 (STM.ai v7.0.0-RC8)
-Created date          : 2021-12-08 18:11:18
-Parameters            : generate --name network -m C:/Users/Felix/PycharmProjects/ias0360-final-project/gbt/feature_extractor.tflite --type tflite --compression 1 --verbosity 1 --workspace C:\Users\Felix\AppData\Local\Temp\mxAI_workspace17075770228170012432041481441455038 --output C:\Users\Felix\.stm32cubemx
+Created date          : 2021-12-08 22:06:33
+Parameters            : generate --name network -m C:/Users/Felix/PycharmProjects/ias0360-final-project/gbt/feature_extractor.tflite --type tflite --compression 1 --verbosity 1 --workspace C:\Users\Felix\AppData\Local\Temp\mxAI_workspace1848734233377004347188773562357253 --output C:\Users\Felix\.stm32cubemx
 
 Exec/report summary (generate)
 ------------------------------------------------------------------------------------------------------------------------
 model file            : C:\Users\Felix\PycharmProjects\ias0360-final-project\gbt\feature_extractor.tflite
 type                  : tflite
 c_name                : network
-workspace dir         : C:\Users\Felix\AppData\Local\Temp\mxAI_workspace17075770228170012432041481441455038
+workspace dir         : C:\Users\Felix\AppData\Local\Temp\mxAI_workspace1848734233377004347188773562357253
 output dir            : C:\Users\Felix\.stm32cubemx
 
 model_name            : feature_extractor

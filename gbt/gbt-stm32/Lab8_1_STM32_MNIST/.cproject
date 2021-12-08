@@ -109,12 +109,12 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.689411451.1594469205" name="app_x-cube-ai.c" rcbsApplicability="disable" resourcePath="Src/app_x-cube-ai.c" toolsToInvoke="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.1134843100.135021431">
-						<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.1134843100.135021431" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.1134843100" />
+					<fileInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.689411451.1756008133" name="app_x-cube-ai.c" rcbsApplicability="disable" resourcePath="Src/app_x-cube-ai.c" toolsToInvoke="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.1134843100.1820490935">
+						<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.1134843100.1820490935" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.1134843100" />
 					</fileInfo>
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers" />
-						<entry excluding="" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Src" />
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Src" />
 						<entry excluding="startup_stm32f429zitx.s" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="startup" />
 					</sourceEntries>
 				</configuration>
@@ -227,7 +227,7 @@
 					</folderInfo>
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers" />
-						<entry excluding="" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Src" />
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Src" />
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="startup" />
 					</sourceEntries>
 				</configuration>

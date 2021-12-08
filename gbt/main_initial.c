@@ -1,21 +1,21 @@
 /* USER CODE BEGIN Header */
 /**
- ******************************************************************************
- * @file           : main.c
- * @brief          : Main program body
- ******************************************************************************
- * @attention
- *
- * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
- * All rights reserved.</center></h2>
- *
- * This software component is licensed by ST under Ultimate Liberty license
- * SLA0044, the "License"; You may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- *                             www.st.com/SLA0044
- *
- ******************************************************************************
- */
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Main program body
+  ******************************************************************************
+  * @attention
+  *
+  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -28,7 +28,6 @@
 #include "usart.h"
 #include "gpio.h"
 #include "fmc.h"
-#include "app_x-cube-ai.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -40,11 +39,6 @@
 
 #include "stm32f429i_discovery_lcd.h"
 #include "stm32f429i_discovery_ts.h"
-
-#include "network.h"
-#include "network_data.h"
-#include "network_3.h"
-#include "network_3_data.h"
 
 #include "X_test.h"
 #include "y_test.h"
@@ -59,29 +53,24 @@ TS_StateTypeDef ui_state;
 
 /* Global handle to reference an instantiated C-model */
 static ai_handle network = AI_HANDLE_NULL;
-static ai_handle network2 = AI_HANDLE_NULL;
 
 /* Global c-array to handle the activations buffer */
 AI_ALIGNED(32)
 static ai_u8 activations[AI_NETWORK_DATA_ACTIVATIONS_SIZE];
-static ai_u8 activations2[AI_NETWORK_DATA_ACTIVATIONS_SIZE];
 
 /* Data payload for input tensor */
 AI_ALIGNED(32)
 static ai_float in_data[AI_NETWORK_IN_1_SIZE];
-static ai_float in_data2[AI_NETWORK_3_IN_1_SIZE];
 /* or static ai_u8 in_data[AI_NETWORK_IN_1_SIZE_BYTES]; */
 
 /* Data payload for the output tensor */
 AI_ALIGNED(32)
 static ai_float out_data[AI_NETWORK_OUT_1_SIZE];
-static ai_float out_data2[AI_NETWORK_3_OUT_1_SIZE];
 /* static ai_u8 out_data[AI_NETWORK_OUT_1_SIZE_BYTES]; */
 
-// add prediction data structure
-struct prediction_probability {
-	ai_float prob;
-	ai_u8 label;
+struct prediction_probability{
+ ai_float prob;
+ ai_u8  label;
 };
 
 typedef struct prediction_probability pred_probType;
@@ -95,25 +84,38 @@ typedef struct prediction_probability pred_probType;
 #define LCD_LAYER_0 RESET
 #define TRUE SET
 
-/* Using 2 layers from datasheet */
+/* Using 2 layers from data sheet */
 #define LCD_FRAME_BUFFER_LAYER0             (LCD_FRAME_BUFFER +0x130000)
 #define LCD_FRAME_BUFFER_LAYER1 			LCD_FRAME_BUFFER
 #define CONVERTED_FRAME_BUFFER              (LCD_FRAME_BUFFER +0x260000)
 
+/* Defining positions of screen elements */
+#define DRAW_IMG_X1							10
+#define	DRAW_IMG_X2							230
+
+#define DRAW_IMG_Y1							10
+#define	DRAW_IMG_Y2							230
+
+#define ERASE_BUTTON_X1						5
+#define ERASE_BUTTON_Y1						285
+#define ERASE_BUTTON_X2						ERASE_BUTTON_X1 +230
+#define ERASE_BUTTON_Y2						ERASE_BUTTON_Y1 + 30
+
+#define IMG_SCALED_X_SHIFT					200
+#define IMG_SCALED_Y_SHIFT					250
+
 #define  PXL_SET							0.99
-// LAB8: Change number of output classes accordingly based on the MNIST model
 #define  NUM_CLASSES						2
 
-// LAB7: Add USART prototype for printf (described in lecture 9 materials)
+// USART prototype for printf (described in lecture 9 materials)
 #ifdef __GNUC__
 #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
 #else
 #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
 #endif /* __GNUC__ */
 PUTCHAR_PROTOTYPE {
-	while (HAL_UART_Transmit(&huart1, (uint8_t*) &ch, 1, 10) != HAL_OK) {
-	};
-	return ch;
+        while (HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 10) != HAL_OK) {};
+ return ch;
 }
 
 #ifdef __GNUC__
@@ -123,14 +125,14 @@ PUTCHAR_PROTOTYPE {
 #endif /* __GNUC__ */
 
 GETCHAR_PROTOTYPE {
-	uint8_t ch = 0;
-	// Clear the Overrun flag just before receiving the first character
-	__HAL_UART_CLEAR_OREFLAG(&huart1);
-	HAL_UART_Receive(&huart1, (uint8_t*) &ch, 1, 0xFFFF);
-	while (HAL_UART_Transmit(&huart1, (uint8_t*) &ch, 1, 10) != HAL_OK) {
-	};
-	return ch;
+  uint8_t ch = 0;
+  // Clear the Overrun flag just before receiving the first character
+  __HAL_UART_CLEAR_OREFLAG(&huart1);
+  HAL_UART_Receive(&huart1, (uint8_t *)&ch, 1, 0xFFFF);
+  while (HAL_UART_Transmit(&huart1, (uint8_t *)&ch, 1, 10) != HAL_OK) {};
+  return ch;
 }
+
 
 /* USER CODE END PD */
 
@@ -149,12 +151,8 @@ GETCHAR_PROTOTYPE {
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 void user_interface_init(void);
-void user_interface_reset(void);
-void touch_sensor_init(void);
-// Lab 8: add prototype
-void reset_nn(ai_float*, ai_float*,ai_float*, ai_float*, pred_probType*, pred_probType*);
-int aiInit(void);
-int aiRun(const void*, void*, void*, void*);
+void user_interface_reset();
+void touch_sensor_init();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -198,16 +196,20 @@ int main(void)
   MX_SPI5_Init();
   MX_TIM1_Init();
   MX_USART1_UART_Init();
-
+  MX_X_CUBE_AI_Init();
   /* USER CODE BEGIN 2 */
-	printf("ias0360-final-project running \r\n");
+  printf("[MAIN] Application running - Final Project \r\n");
 
-	// Initialise BUTTON_KEY. Use BSP_PB_Init() function.
-	BSP_PB_Init(BUTTON_KEY, BUTTON_MODE_GPIO);
+  // Initialize BUTTON_KEY
+  BSP_PB_Init(BUTTON_KEY,  BUTTON_MODE_GPIO);
 
-	// Initialise LCD and reset it
-	user_interface_init();
-	user_interface_reset();
+  // Initialize touch sensor
+  touch_sensor_init();
+
+  // Initialize LCD and reset it
+  /* Initialize all peripherals related to LCD and Touch sensor */
+  user_interface_init();
+  user_interface_reset();
 
 	pred_probType _1st_pred, _2nd_pred;
 	_1st_pred.prob = _2nd_pred.prob = 0.0f;
@@ -215,18 +217,18 @@ int main(void)
 	char _1st_pred_str[50], _1st_pred_prob_str[50];
 
 	// Reset NN data preliminary
-	reset_nn(in_data, out_data, in_data2, out_data2, &_1st_pred, &_2nd_pred);
+	reset_nn(in_data, out_data, &_1st_pred, &_2nd_pred);
 
-	// Init NN
-	aiInit();
+
+  // Init NN
+   aiInit();
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	int image_idx = 0;
-	while (1) {
-
+  int image_idx = 0;
+  while (1) {
 		if (BSP_PB_GetState(BUTTON_KEY)) {
 			user_interface_reset();
 
@@ -251,19 +253,18 @@ int main(void)
 			}
 
 			// Execute inference
-			// TODO: Continue here!
-			aiRun(X_test[image_idx], out_data, in_data2, out_data2);
+			aiRun(in_data, out_data);
 
 			for (int i = 0; i < NUM_CLASSES; i++) {
-				if (_1st_pred.prob < out_data2[i]) {
+				if (_1st_pred.prob < out_data[i]) {
 					_2nd_pred.label = _1st_pred.label;
 					_2nd_pred.prob = _1st_pred.prob;
-					_1st_pred.prob = out_data2[i];
+					_1st_pred.prob = out_data[i];
 					_1st_pred.label = i;
 
-				} else if (_2nd_pred.prob < out_data2[i]) {
+				} else if (_2nd_pred.prob < out_data[i]) {
 					_2nd_pred.label = i;
-					_2nd_pred.prob = out_data2[i];
+					_2nd_pred.prob = out_data[i];
 				}
 			}
 
@@ -294,11 +295,10 @@ int main(void)
 			image_idx %= 20;
 
 		}
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	}
+  }
   /* USER CODE END 3 */
 }
 
@@ -357,119 +357,25 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 
 // Reset function
-void reset_nn(ai_float *in_data, ai_float *out_data, ai_float *in_data2, ai_float *out_data2,
+void reset_nn(ai_float *in_data, ai_float *out_data,
 		pred_probType *_1st_pred, pred_probType *_2nd_pred) {
 	memset(in_data, 0.0, sizeof(in_data[0]) * AI_NETWORK_IN_1_SIZE);
 	memset(out_data, 0.0, sizeof(out_data[0]) * AI_NETWORK_OUT_1_SIZE);
-	memset(in_data2, 0.0, sizeof(in_data2[0]) * AI_NETWORK_3_IN_1_SIZE);
-	memset(out_data2, 0.0, sizeof(out_data2[0]) * AI_NETWORK_3_OUT_1_SIZE);
 	_2nd_pred->label = _2nd_pred->prob = _1st_pred->label = _1st_pred->prob =
 			0.0;
 }
-
-/*
- * Bootstrap code
- */
-int aiInit(void) {
-	ai_error err;
-	ai_error err2;
-
-	/* 1 - Create an instance of the model */
-	err = ai_mnetwork_create("network", &network, AI_NETWORK_DATA_CONFIG /* or NULL */);
-	err2 = ai_mnetwork_create("network_3", &network2, AI_NETWORK_3_DATA_CONFIG /* or NULL */);
-	if (err.type != AI_ERROR_NONE) {
-		printf("E: AI ai_network_create error - type=%d code=%d\r\n", err.type,
-				err.code);
-		return -1;
-	};
-	if (err2.type != AI_ERROR_NONE) {
-			printf("E: AI ai_network2_create error - type=%d code=%d\r\n", err2.type,
-					err2.code);
-			return -1;
-	};
-
-	/* 2 - Initialise the instance */
-	const ai_network_params params = AI_NETWORK_PARAMS_INIT(
-			AI_NETWORK_DATA_WEIGHTS(ai_network_data_weights_get()),
-			AI_NETWORK_DATA_ACTIVATIONS(activations)
-	);
-	const ai_network_params params2 = AI_NETWORK_PARAMS_INIT(
-				AI_NETWORK_DATA_WEIGHTS(ai_network_3_data_weights_get()),
-				AI_NETWORK_DATA_ACTIVATIONS(activations2)
-		);
-
-	if (!ai_mnetwork_init(network, &params)) {
-		err = ai_mnetwork_get_error(network);
-		printf("E: AI ai_network_init error - type=%d code=%d\r\n", err.type,
-				err.code);
-		return -1;
-	}
-	if (!ai_mnetwork_init(network2, &params2)) {
-			err2 = ai_mnetwork_get_error(network2);
-			printf("E: AI ai_network2_init error - type=%d code=%d\r\n", err2.type,
-					err2.code);
-			return -1;
-		}
-
-	return 0;
-}
-
-/*
- * Run inference code
- */
-int aiRun(const void *in_data, void *out_data, void *in_data2, void *out_data2) {
-	ai_i32 n_batch;
-	ai_error err;
-	ai_i32 n_batch2;
-	ai_error err2;
-
-	/* 1 - Create the AI buffer IO handlers with the default definition */
-	ai_buffer ai_input[AI_NETWORK_IN_NUM] = AI_NETWORK_IN;
-	ai_buffer ai_output[AI_NETWORK_OUT_NUM] = AI_NETWORK_OUT;
-	ai_buffer ai_input2[AI_NETWORK_3_IN_NUM] = AI_NETWORK_3_IN;
-	ai_buffer ai_output2[AI_NETWORK_3_OUT_NUM] = AI_NETWORK_3_OUT;
-
-	/* 2 - Update IO handlers with the data payload */
-	ai_input[0].n_batches = 1;
-	ai_input[0].data = AI_HANDLE_PTR(in_data);
-	ai_output[0].n_batches = 1;
-	ai_output[0].data = AI_HANDLE_PTR(out_data);
-	ai_input2[0].n_batches = 1;
-	ai_input2[0].data = AI_HANDLE_PTR(in_data2);
-	ai_output2[0].n_batches = 1;
-	ai_output2[0].data = AI_HANDLE_PTR(out_data2);
-
-	/* 3 - Perform the inference */
-	n_batch = ai_mnetwork_run(network, &ai_input[0], &ai_output[0]);
-	if (n_batch != 1) {
-		err = ai_mnetwork_get_error(network);
-		printf("E: AI ai_network_run error - type=%d code=%d\r\n", err.type,
-				err.code);
-		return -1;
-	};
-
-	n_batch2 = ai_mnetwork_run(network2, &ai_output[0], &ai_output2[0]);
-		if (n_batch2 != 1) {
-			err2 = ai_mnetwork_get_error(network2);
-			printf("E: AI ai_network_2_run error - type=%d code=%d\r\n", err2.type,
-					err2.code);
-			return -1;
-		};
-
-	return 0;
-}
-
 /**
  *
  * @brief: TLCD INIT Implementation
  * @Param: Board Support Package
  *
  */
-void user_interface_init(void) {
-	// Initialise LCD. Use functions from stm32f429i_discovery_lcd.h
+void user_interface_init(void)
+{
+	// Initialize LCD. Use functions from stm32f429i_discovery_lcd.h
 	BSP_LCD_Init();
 
-	// Initialise LCD Layer 1 (background layer) with FB address that points to layer 1
+	// Initialize LCD Layer 1 (background layer) with FB address that points to layer 1
 	BSP_LCD_LayerDefaultInit(LCD_LAYER_1, LCD_FRAME_BUFFER_LAYER1);
 
 	// Select layer 1
@@ -478,13 +384,13 @@ void user_interface_init(void) {
 	// Clear LCD (color red)
 	BSP_LCD_Clear(LCD_COLOR_RED);
 
-	// Set colour keyring for layer 1 (colour dark cyan)
+	// Set color keyring for layer 1 (color dark cyan)
 	BSP_LCD_SetColorKeying(LCD_LAYER_1, LCD_COLOR_DARKCYAN);
 
 	// Set layer 1 visibility to disabled
 	BSP_LCD_SetLayerVisible(LCD_LAYER_1, DISABLE);
 
-	// Initialise Layer 0 (foreground or visible layer) with FB address that points to layer 0
+	// Initialize Layer 0 (foreground or visible layer) with FB address that points to layer 0
 	BSP_LCD_LayerDefaultInit(LCD_LAYER_0, LCD_FRAME_BUFFER_LAYER0);
 
 	// Select Layer 0
@@ -500,8 +406,10 @@ void user_interface_init(void) {
 
 	HAL_Delay(100);
 
-	printf("LCD initialisation completed \r\n");
+	printf("LCD initialization completed \r\n");
 }
+
+
 
 /**
  *
@@ -513,43 +421,45 @@ void user_interface_reset(void) {
 	// Clear LCD with light cyan color. Possible color definitions in stm32f429i_discovery_lcd.h
 	BSP_LCD_Clear(LCD_COLOR_LIGHTCYAN);
 
-	// Set background color (lightcyan)
-	BSP_LCD_SetBackColor(LCD_COLOR_LIGHTCYAN);
-
-	// set font size 16
-	BSP_LCD_SetFont(&Font20);
-	// Set text color to blue
-	BSP_LCD_SetTextColor(LCD_COLOR_RED);
-	// Write prediction output string "NN OUTPUT" to position x,y = (5, 255)
-	BSP_LCD_DisplayStringAt(15, 5, (uint8_t*) "Thermal Picture ", CENTER_MODE);
-	BSP_LCD_DisplayStringAt(15, 25, (uint8_t*) "Prediction ", CENTER_MODE);
-
 	// Set text color to black
 	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 
-	// Picture box
-	BSP_LCD_FillRect(64, 64, 128, 128);
-
 	// set font size 16
 	BSP_LCD_SetFont(&Font16);
+
+	// Set background color (lightcyan)
+	BSP_LCD_SetBackColor(LCD_COLOR_LIGHTCYAN);
+
 	// Write prediction output string "NN OUTPUT" to position x,y = (5, 255)
-	BSP_LCD_DisplayStringAt(5, 220, (uint8_t*) "NN OUTPUT: ", LEFT_MODE);
+	BSP_LCD_DisplayStringAt(5,  255,  (uint8_t*) "NN OUTPUT: ", LEFT_MODE);
+
+	// Draw rectangle to mark prediction output area. Marked with "B" on image.
+	// Position x,y = (200, 250) and dimensions = (28, 28)
+	BSP_LCD_DrawRect(200, 250, 28, 28);
 
 	// Set text color to blue
 	BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
 
 	// Write clear button area, marked with "C". Draw filled rectangle to position x,y = (5, 285) with dimensions = (230, 30)
-	// BSP_LCD_FillRect(5, 285, 230, 30);
+	BSP_LCD_FillRect(5, 285, 230, 30);
 
 	// Set text color to white
-	// BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
 
+	// Set font size to 16
+	BSP_LCD_SetFont(&Font16);
 
 	// Set background color as blue
-	// BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+	BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
+
+	// Display string "CLEAR" to position x,y = (330, 291)
+	BSP_LCD_DisplayStringAt(330, 291, (uint8_t*) "CLEAR", LEFT_MODE);
+
+	// Draw minimized user drawing area, marked with "D" on figure. Draw rectangle to position x,y = (2,2) and dimensions (237,237)
+	BSP_LCD_DrawRect(2, 2, 237, 237);
 
 	// Set text color as black
-	// BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+	BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 
 	printf("LCD Interface INIT successful \r\n");
 }
@@ -561,14 +471,15 @@ void user_interface_reset(void) {
  *
  */
 void touch_sensor_init(void) {
-	// Initialise touch sensor to use a whole LCD area (240x320) and print to UART whether the initialization was successful or not
-	if (BSP_TS_Init(240, 320) == TS_ERROR) {
+	// Initialize touch sensor to use a whole LCD area (240x320) and print to UART whether the initialization was successful or not
+	if(BSP_TS_Init(240, 320) == TS_ERROR) {
 		printf("Touch sensor initialization failed \r\n");
-	} else {
+	} else{
 		printf("Touch sensor initialization successful \r\n");
 	}
 	HAL_Delay(50);
 }
+
 
 /* USER CODE END 4 */
 
@@ -600,7 +511,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-	/* User can add his own implementation to report the HAL error return state */
+  /* User can add his own implementation to report the HAL error return state */
 
   /* USER CODE END Error_Handler_Debug */
 }
