@@ -1,0 +1,12 @@
+elu.cc:100:7:void* tflite::{anonymous}::EluInit(TfLiteContext*, const char*, size_t)	8	static
+elu.cc:91:31:static constexpr float tflite::{anonymous}::CalculateOpData(TfLiteContext*, TfLiteNode*)::<lambda(float)>::_FUN(float)	8	static
+elu.cc:46:6:void tflite::{anonymous}::PopulateLookupTable(const TfLiteTensor*, const TfLiteTensor*, tflite::{anonymous}::TransformFunc, tflite::{anonymous}::OpData*) [with T = signed char]	56	static
+elu.cc:78:14:TfLiteStatus tflite::{anonymous}::CalculateOpData(TfLiteContext*, TfLiteNode*)	48	static
+elu.cc:108:14:TfLiteStatus tflite::{anonymous}::EluPrepare(TfLiteContext*, TfLiteNode*)	8	static
+elu.cc:140:20:TfLiteRegistration tflite::Register_ELU()	12	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = signed char]	0	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = signed char]	8	static
+elu.cc:66:6:void tflite::{anonymous}::EvalUsingLookupTable(const tflite::{anonymous}::OpData*, const TfLiteEvalTensor*, TfLiteEvalTensor*)	72	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = float]	8	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = float]	0	static
+elu.cc:112:14:TfLiteStatus tflite::{anonymous}::EluEval(TfLiteContext*, TfLiteNode*)	72	static

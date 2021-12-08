@@ -1,0 +1,31 @@
+micro_interpreter.cc:36:13:const char* tflite::{anonymous}::OpNameFromRegistration(const TfLiteRegistration*)	0	static
+micro_interpreter.cc:53:7:static void* tflite::internal::ContextHelper::AllocatePersistentBuffer(TfLiteContext*, size_t)	8	static
+micro_interpreter.cc:66:7:static void* tflite::internal::ContextHelper::GetScratchBuffer(TfLiteContext*, int)	0	static
+micro_interpreter.cc:83:15:static TfLiteTensor* tflite::internal::ContextHelper::GetTensor(const TfLiteContext*, int)	16	static
+micro_interpreter.cc:90:19:static TfLiteEvalTensor* tflite::internal::ContextHelper::GetEvalTensor(const TfLiteContext*, int)	0	static
+micro_interpreter.cc:59:14:static TfLiteStatus tflite::internal::ContextHelper::RequestScratchBufferInArena(TfLiteContext*, size_t, int*)	8	static
+micro_interpreter.cc:72:6:)	12	static
+micro_interpreter.cc:49:1:tflite::internal::ContextHelper::ContextHelper(tflite::ErrorReporter*, tflite::MicroAllocator*, const tflite::Model*)	4	static
+micro_interpreter.cc:96:6:void tflite::internal::ContextHelper::SetTfLiteEvalTensors(TfLiteEvalTensor*)	0	static
+micro_interpreter.cc:100:6:void tflite::internal::ContextHelper::SetScratchBufferHandles(tflite::ScratchBufferHandle*)	0	static
+micro_interpreter.cc:378:15:TfLiteTensor* tflite::MicroInterpreter::tensor(size_t)	16	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = long unsigned int]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = long unsigned int]	8	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = long int]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = long int]	8	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = short unsigned int]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = short unsigned int]	8	static
+micro_interpreter.cc:145:1:tflite::MicroInterpreter::~MicroInterpreter()	24	static
+micro_interpreter.cc:367:15:TfLiteTensor* tflite::MicroInterpreter::output(size_t)	24	static
+micro_interpreter.cc:356:15:TfLiteTensor* tflite::MicroInterpreter::input(size_t)	24	static
+micro_interpreter.cc:160:6:void tflite::MicroInterpreter::Init(tflite::MicroProfiler*)	24	static
+micro_interpreter.cc:107:1:tflite::MicroInterpreter::MicroInterpreter(const tflite::Model*, const tflite::MicroOpResolver&, uint8_t*, size_t, tflite::ErrorReporter*, tflite::MicroProfiler*)	24	static
+micro_interpreter.cc:127:1:tflite::MicroInterpreter::MicroInterpreter(const tflite::Model*, const tflite::MicroOpResolver&, tflite::MicroAllocator*, tflite::ErrorReporter*, tflite::MicroProfiler*)	24	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = unsigned char]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = unsigned char]	8	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = signed char]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = signed char]	8	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = long long int]	0	static
+micro_interpreter.cc:390:14:TfLiteStatus tflite::MicroInterpreter::ResetVariableTensors()	32	static
+micro_interpreter.cc:181:14:TfLiteStatus tflite::MicroInterpreter::AllocateTensors()	48	static
+micro_interpreter.cc:307:14:TfLiteStatus tflite::MicroInterpreter::Invoke()	48	static

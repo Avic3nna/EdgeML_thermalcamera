@@ -1,0 +1,7 @@
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = long unsigned int]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = long unsigned int]	8	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = long int]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = long int]	8	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = short unsigned int]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = short unsigned int]	8	static
+op_resolver.cc:25:14:TfLiteStatus tflite::GetRegistrationFromOpCode(const tflite::OperatorCode*, const tflite::OpResolver&, tflite::ErrorReporter*, const TfLiteRegistration**)	32	static

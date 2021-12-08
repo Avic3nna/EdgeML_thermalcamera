@@ -1,0 +1,7 @@
+add_n.cc:31:14:TfLiteStatus tflite::{anonymous}::CalculateOpData(TfLiteContext*, TfLiteNode*)	56	static
+add_n.cc:70:14:TfLiteStatus tflite::{anonymous}::Prepare(TfLiteContext*, TfLiteNode*)	8	static
+add_n.cc:108:20:TfLiteRegistration tflite::Register_ADD_N()	12	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = float]	8	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = float]	0	static
+add_n.cc:75:6:void tflite::{anonymous}::EvalAddN(TfLiteContext*, TfLiteNode*, TfLiteEvalTensor*) [with T = float]	56	static
+add_n.cc:93:14:TfLiteStatus tflite::{anonymous}::Eval(TfLiteContext*, TfLiteNode*)	16	static

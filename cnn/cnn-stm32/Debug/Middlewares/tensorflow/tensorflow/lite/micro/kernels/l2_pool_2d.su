@@ -1,0 +1,7 @@
+l2_pool_2d.cc:38:14:TfLiteStatus tflite::{anonymous}::L2Prepare(TfLiteContext*, TfLiteNode*)	80	static
+l2_pool_2d.cc:126:20:TfLiteRegistration tflite::Register_L2_POOL_2D()	12	static
+kernel_util.h:253:6:void tflite::CalculateActivationRange(TfLiteFusedActivation, T*, T*) [with T = float]	0	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = float]	8	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = float]	0	static
+l2_pool_2d.cc:82:6:void tflite::{anonymous}::L2EvalFloat(const TfLitePoolParams&, const TfLiteEvalTensor&, tflite::PoolParams*, TfLiteEvalTensor*)	208	static
+l2_pool_2d.cc:95:14:TfLiteStatus tflite::{anonymous}::L2Eval(TfLiteContext*, TfLiteNode*)	72	static

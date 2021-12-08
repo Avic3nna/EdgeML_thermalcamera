@@ -1,0 +1,12 @@
+expand_dims.cc:29:14:TfLiteStatus tflite::{anonymous}::ExpandTensorDim(TfLiteContext*, const TfLiteEvalTensor*, int32_t, TfLiteEvalTensor*)	24	static
+expand_dims.cc:94:6:void tflite::{anonymous}::memCopyN(T*, const T*, int) [with T = float]	8	static
+expand_dims.cc:94:6:void tflite::{anonymous}::memCopyN(T*, const T*, int) [with T = signed char]	4	static
+expand_dims.cc:74:14:TfLiteStatus tflite::{anonymous}::Prepare(TfLiteContext*, TfLiteNode*)	48	static
+expand_dims.cc:141:20:TfLiteRegistration tflite::Register_EXPAND_DIMS()	12	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = long int]	8	static
+expand_dims.cc:52:14:TfLiteStatus tflite::{anonymous}::GetAxisValueFromTensor(TfLiteContext*, const TfLiteEvalTensor*, int32_t*)	48	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = float]	0	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = float]	8	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = signed char]	0	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = signed char]	8	static
+expand_dims.cc:100:14:TfLiteStatus tflite::{anonymous}::Eval(TfLiteContext*, TfLiteNode*)	40	static

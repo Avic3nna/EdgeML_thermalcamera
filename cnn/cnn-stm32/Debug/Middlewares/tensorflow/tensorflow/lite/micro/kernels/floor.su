@@ -1,0 +1,4 @@
+floor.cc:44:20:TfLiteRegistration tflite::ops::micro::Register_FLOOR()	8	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = float]	8	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = float]	0	static
+floor.cc:30:14:TfLiteStatus tflite::ops::micro::floor::Eval(TfLiteContext*, TfLiteNode*)	88	static

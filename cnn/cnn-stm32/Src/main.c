@@ -40,15 +40,17 @@
 #include "stm32f429i_discovery_lcd.h"
 #include "stm32f429i_discovery_ts.h"
 
+#include "X_test.h"
+#include "y_test.h"
+
 #include "network_config.h"
 #include "network_tflite_data.h"
 
-/* Start of TF lite micro includes */
-#include "tensorflow/lite/c/c_api_types.h"
-#include "tensorflow/lite/version.h"
+#include "tflm_c.h"
 
-#include "X_test.h"
-#include "y_test.h"
+// define TL lite micro arena
+// const int tensor_arena_size = 50000; // raises error: variably modified 'tensor_arena' at file scope
+uint8_t tensor_arena[50000];
 
 extern float X_train[20][1024];
 extern float y_train[];
@@ -97,7 +99,7 @@ TS_StateTypeDef ui_state;
 #define LCD_FRAME_BUFFER_LAYER1 			LCD_FRAME_BUFFER
 #define CONVERTED_FRAME_BUFFER              (LCD_FRAME_BUFFER +0x260000)
 
-#define  PXL_SET							0.99
+// #define  PXL_SET							0.99
 // LAB8: Change number of output classes accordingly based on the MNIST model
 #define  NUM_CLASSES						2
 
@@ -150,8 +152,9 @@ void user_interface_reset(void);
 void touch_sensor_init(void);
 // Lab 8: add prototype
 // TODO: REPLACE void reset_nn(ai_float*, ai_float*, pred_probType*, pred_probType*);
-int aiInit(void);
-int aiRun(const void*, void*);
+// TODO: REPLACE int aiInit(void);
+// TODO: REPLACE int aiRun(const void*, void*);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -198,6 +201,10 @@ int main(void)
   /* USER CODE BEGIN 2 */
 	printf("ias0360-final-project running \r\n");
 
+	// create nn
+	uint32_t *hdl = NULL;
+	tflm_c_create(g_tflm_network_model_data, tensor_arena, TFLM_NETWORK_TENSOR_AREA_SIZE, hdl);
+
 	// Initialise BUTTON_KEY. Use BSP_PB_Init() function.
 	BSP_PB_Init(BUTTON_KEY, BUTTON_MODE_GPIO);
 
@@ -208,13 +215,14 @@ int main(void)
 	//TODO: FIX pred_probType _1st_pred, _2nd_pred;
 	//TODO: FIX 	_1st_pred.prob = _2nd_pred.prob = 0.0f;
 
-	char _1st_pred_str[50], _1st_pred_prob_str[50];
+	char _1st_pred_str[50];
+	//char _1st_pred_prob_str[50];
 
 	// Reset NN data preliminary
 	//TODO: FIX 	reset_nn(in_data, out_data, &_1st_pred, &_2nd_pred);
 
 	// Init NN
-	aiInit();
+	//TODO: FIX aiInit();
 
   /* USER CODE END 2 */
 
@@ -222,6 +230,10 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 	int image_idx = 0;
 	while (1) {
+
+
+		// Run inference
+		tflm_c_reset_all_variables(*hdl);
 
 		if (BSP_PB_GetState(BUTTON_KEY)) {
 			user_interface_reset();
@@ -296,6 +308,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	}
+	tflm_c_destroy(*hdl);
   /* USER CODE END 3 */
 }
 
@@ -343,6 +356,13 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+/*
+ * Implements TF lite micro debug output
+ */
+int tflm_io_write(const void *buff, uint16_t count){
+	return 0;
+}
 
 //TODO: FIX
 // Reset function

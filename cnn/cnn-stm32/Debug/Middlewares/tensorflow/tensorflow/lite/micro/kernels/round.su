@@ -1,0 +1,5 @@
+round.cc:31:14:TfLiteStatus tflite::ops::micro::round::Prepare(TfLiteContext*, TfLiteNode*)	40	static
+round.cc:63:20:TfLiteRegistration tflite::ops::micro::Register_ROUND()	12	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = float]	8	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = float]	0	static
+round.cc:48:14:TfLiteStatus tflite::ops::micro::round::Eval(TfLiteContext*, TfLiteNode*)	80	static

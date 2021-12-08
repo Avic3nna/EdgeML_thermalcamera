@@ -1,0 +1,38 @@
+circular_buffer.cc:88:14:TfLiteStatus tflite::ops::micro::circular_buffer::Prepare(TfLiteContext*, TfLiteNode*)	40	static
+circular_buffer.cc:138:6:void tflite::ops::micro::circular_buffer::EvalInt8(const int8_t*, int, int, int8_t*)	24	static
+circular_buffer.cc:178:21:TfLiteRegistration* tflite::ops::micro::Register_CIRCULAR_BUFFER()	0	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = signed char]	8	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = signed char]	0	static
+circular_buffer.cc:143:14:TfLiteStatus tflite::ops::micro::circular_buffer::Eval(TfLiteContext*, TfLiteNode*)	32	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = long long int]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = long long int]	8	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = long long unsigned int]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = long long unsigned int]	8	static
+flexbuffers.h:179:37:const uint8_t* flexbuffers::Indirect(const uint8_t*) [with T = long long unsigned int]	8	static
+flexbuffers.h:846:26:int flexbuffers::KeyCompare(const void*, const void*) [with T = long long unsigned int]	8	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = unsigned char]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = unsigned char]	8	static
+flexbuffers.h:179:37:const uint8_t* flexbuffers::Indirect(const uint8_t*) [with T = unsigned char]	8	static
+flexbuffers.h:846:26:int flexbuffers::KeyCompare(const void*, const void*) [with T = unsigned char]	8	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = double]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = double]	8	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = float]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = float]	8	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = signed char]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = signed char]	8	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = short int]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = short int]	8	static
+flexbuffers.h:136:3:R flexbuffers::ReadSizedScalar(const uint8_t*, uint8_t) [with R = double; T1 = signed char; T2 = short int; T4 = float; T8 = double]	8	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = long int]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = long int]	8	static
+flexbuffers.h:136:3:R flexbuffers::ReadSizedScalar(const uint8_t*, uint8_t) [with R = long long int; T1 = signed char; T2 = short int; T4 = long int; T8 = long long int]	8	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = short unsigned int]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = short unsigned int]	8	static
+flexbuffers.h:179:37:const uint8_t* flexbuffers::Indirect(const uint8_t*) [with T = short unsigned int]	8	static
+flexbuffers.h:846:26:int flexbuffers::KeyCompare(const void*, const void*) [with T = short unsigned int]	8	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = long unsigned int]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = long unsigned int]	8	static
+flexbuffers.h:136:3:R flexbuffers::ReadSizedScalar(const uint8_t*, uint8_t) [with R = long long unsigned int; T1 = unsigned char; T2 = short unsigned int; T4 = long unsigned int; T8 = long long unsigned int]	8	static
+circular_buffer.cc:72:7:void* tflite::ops::micro::circular_buffer::Init(TfLiteContext*, const char*, size_t)	104	static
+flexbuffers.h:179:37:const uint8_t* flexbuffers::Indirect(const uint8_t*) [with T = long unsigned int]	8	static
+flexbuffers.h:846:26:int flexbuffers::KeyCompare(const void*, const void*) [with T = long unsigned int]	8	static

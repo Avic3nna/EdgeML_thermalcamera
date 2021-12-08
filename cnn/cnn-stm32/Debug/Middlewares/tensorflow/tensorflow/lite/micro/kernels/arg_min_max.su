@@ -1,0 +1,16 @@
+arg_min_max.cc:109:20:TfLiteRegistration tflite::ops::micro::Register_ARG_MAX()	8	static
+arg_min_max.cc:120:20:TfLiteRegistration tflite::ops::micro::Register_ARG_MIN()	8	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = float]	8	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = long int]	8	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = long int]	0	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = unsigned char]	8	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = signed char]	8	static
+arg_min_max.h:36:6:void tflite::reference_ops::ArgMinMax(const tflite::RuntimeShape&, const T1*, const T3*, const tflite::RuntimeShape&, T2*, const Cmp&) [with T1 = float; T2 = long int; T3 = long int; Cmp = tflite::ops::micro::Greater]	32	static
+arg_min_max.h:36:6:void tflite::reference_ops::ArgMinMax(const tflite::RuntimeShape&, const T1*, const T3*, const tflite::RuntimeShape&, T2*, const Cmp&) [with T1 = float; T2 = long int; T3 = long int; Cmp = tflite::ops::micro::Less]	32	static
+arg_min_max.h:36:6:void tflite::reference_ops::ArgMinMax(const tflite::RuntimeShape&, const T1*, const T3*, const tflite::RuntimeShape&, T2*, const Cmp&) [with T1 = unsigned char; T2 = long int; T3 = long int; Cmp = tflite::ops::micro::Greater]	32	static
+arg_min_max.h:36:6:void tflite::reference_ops::ArgMinMax(const tflite::RuntimeShape&, const T1*, const T3*, const tflite::RuntimeShape&, T2*, const Cmp&) [with T1 = unsigned char; T2 = long int; T3 = long int; Cmp = tflite::ops::micro::Less]	32	static
+arg_min_max.h:36:6:void tflite::reference_ops::ArgMinMax(const tflite::RuntimeShape&, const T1*, const T3*, const tflite::RuntimeShape&, T2*, const Cmp&) [with T1 = signed char; T2 = long int; T3 = long int; Cmp = tflite::ops::micro::Greater]	32	static
+arg_min_max.h:36:6:void tflite::reference_ops::ArgMinMax(const tflite::RuntimeShape&, const T1*, const T3*, const tflite::RuntimeShape&, T2*, const Cmp&) [with T1 = signed char; T2 = long int; T3 = long int; Cmp = tflite::ops::micro::Less]	32	static
+arg_min_max.cc:48:14:TfLiteStatus tflite::ops::micro::arg_min_max::Eval(TfLiteContext*, TfLiteNode*, bool)	200	static
+arg_min_max.cc:99:14:TfLiteStatus tflite::ops::micro::arg_min_max::ArgMinEval(TfLiteContext*, TfLiteNode*)	8	static
+arg_min_max.cc:103:14:TfLiteStatus tflite::ops::micro::arg_min_max::ArgMaxEval(TfLiteContext*, TfLiteNode*)	8	static

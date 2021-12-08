@@ -1,0 +1,16 @@
+pad.cc:40:7:void* tflite::ops::micro::pad::Init(TfLiteContext*, const char*, size_t)	8	static
+pad.cc:45:14:TfLiteStatus tflite::ops::micro::pad::Prepare(TfLiteContext*, TfLiteNode*)	152	static
+pad.cc:229:20:TfLiteRegistration tflite::ops::micro::Register_PAD()	12	static
+pad.cc:241:20:TfLiteRegistration tflite::ops::micro::Register_PADV2()	12	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = float]	8	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = float]	0	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = unsigned char]	8	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = unsigned char]	0	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = signed char]	8	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = signed char]	0	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = long int]	8	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = long int]	0	static
+pad.h:38:13:void tflite::reference_ops::PadImpl(const tflite::PadParams&, const tflite::RuntimeShape&, const T*, const P*, const tflite::RuntimeShape&, T*) [with T = float; P = float]	144	static
+pad.h:38:13:void tflite::reference_ops::PadImpl(const tflite::PadParams&, const tflite::RuntimeShape&, const T*, const P*, const tflite::RuntimeShape&, T*) [with T = unsigned char; P = unsigned char]	152	static
+pad.h:38:13:void tflite::reference_ops::PadImpl(const tflite::PadParams&, const tflite::RuntimeShape&, const T*, const P*, const tflite::RuntimeShape&, T*) [with T = signed char; P = signed char]	152	static
+pad.cc:135:14:TfLiteStatus tflite::ops::micro::pad::Eval(TfLiteContext*, TfLiteNode*)	488	static

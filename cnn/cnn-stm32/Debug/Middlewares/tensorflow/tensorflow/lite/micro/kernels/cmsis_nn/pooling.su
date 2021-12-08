@@ -1,0 +1,20 @@
+pooling.cc:266:7:void* tflite::ops::micro::pooling::Init(TfLiteContext*, const char*, size_t)	8	static
+pooling.cc:384:20:TfLiteRegistration tflite::ops::micro::Register_AVERAGE_POOL_2D()	12	static
+pooling.cc:395:20:TfLiteRegistration tflite::ops::micro::Register_MAX_POOL_2D()	12	static
+kernel_util.h:253:6:void tflite::CalculateActivationRange(TfLiteFusedActivation, T*, T*) [with T = float]	0	static
+pooling.cc:47:14:TfLiteStatus tflite::ops::micro::pooling::{anonymous}::CalculateOpData(TfLiteContext*, const TfLitePoolParams*, const TfLiteTensor*, TfLiteTensor*, tflite::ops::micro::pooling::{anonymous}::OpData*)	56	static
+pooling.cc:271:14:TfLiteStatus tflite::ops::micro::pooling::MaxPrepare(TfLiteContext*, TfLiteNode*)	32	static
+pooling.cc:288:14:TfLiteStatus tflite::ops::micro::pooling::AveragePrepare(TfLiteContext*, TfLiteNode*)	96	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = float]	8	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = float]	0	static
+pooling.cc:79:6:void tflite::ops::micro::pooling::{anonymous}::AverageEvalFloat(const TfLiteContext*, const TfLiteNode*, const TfLitePoolParams*, const tflite::ops::micro::pooling::{anonymous}::OpData&, const TfLiteEvalTensor*, TfLiteEvalTensor*)	240	static
+pooling.cc:173:6:void tflite::ops::micro::pooling::{anonymous}::MaxEvalFloat(TfLiteContext*, TfLiteNode*, TfLitePoolParams*, const tflite::ops::micro::pooling::{anonymous}::OpData&, const TfLiteEvalTensor*, TfLiteEvalTensor*)	248	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = unsigned char]	8	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = unsigned char]	0	static
+pooling.cc:194:6:void tflite::ops::micro::pooling::{anonymous}::MaxEvalQuantizedUInt8(TfLiteContext*, TfLiteNode*, TfLitePoolParams*, const tflite::ops::micro::pooling::{anonymous}::OpData&, const TfLiteEvalTensor*, TfLiteEvalTensor*)	232	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = signed char]	8	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = signed char]	0	static
+pooling.cc:101:6:void tflite::ops::micro::pooling::{anonymous}::AverageEvalQuantized(TfLiteContext*, const TfLiteNode*, const TfLitePoolParams*, const tflite::ops::micro::pooling::{anonymous}::OpData&, const TfLiteEvalTensor*, TfLiteEvalTensor*)	360	static
+pooling.cc:323:14:TfLiteStatus tflite::ops::micro::pooling::AverageEval(TfLiteContext*, TfLiteNode*)	32	static
+pooling.cc:213:14:TfLiteStatus tflite::ops::micro::pooling::{anonymous}::MaxEvalInt8(TfLiteContext*, const TfLiteNode*, const TfLitePoolParams*, const tflite::ops::micro::pooling::{anonymous}::OpData&, const TfLiteEvalTensor*, TfLiteEvalTensor*)	176	static
+pooling.cc:352:14:TfLiteStatus tflite::ops::micro::pooling::MaxEval(TfLiteContext*, TfLiteNode*)	32	static

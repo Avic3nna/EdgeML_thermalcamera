@@ -1,0 +1,4 @@
+fully_connected_common.cc:34:22:tflite::FullyConnectedParams tflite::FullyConnectedParamsQuantized(const tflite::OpDataFullyConnected&)	0	static
+fully_connected_common.cc:55:14:TfLiteStatus tflite::CalculateOpDataFullyConnected(TfLiteContext*, TfLiteFusedActivation, TfLiteType, const TfLiteTensor*, const TfLiteTensor*, const TfLiteTensor*, TfLiteTensor*, tflite::OpDataFullyConnected*)	40	static
+kernel_util.h:253:6:void tflite::CalculateActivationRange(TfLiteFusedActivation, T*, T*) [with T = float]	0	static
+fully_connected_common.cc:47:22:tflite::FullyConnectedParams tflite::FullyConnectedParamsFloat(TfLiteFusedActivation)	8	static

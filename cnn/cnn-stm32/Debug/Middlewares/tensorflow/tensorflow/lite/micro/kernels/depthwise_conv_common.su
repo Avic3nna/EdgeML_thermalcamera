@@ -1,0 +1,5 @@
+depthwise_conv_common.cc:60:17:tflite::DepthwiseParams tflite::DepthwiseConvParamsQuantized(const TfLiteDepthwiseConvParams&, const tflite::OpDataConv&)	16	static
+depthwise_conv_common.cc:81:14:TfLiteStatus tflite::CalculateOpDataDepthwiseConv(TfLiteContext*, TfLiteNode*, const TfLiteDepthwiseConvParams&, int, int, int, int, int, int, TfLiteType, tflite::OpDataConv*)	88	static
+depthwise_conv_common.cc:128:14:TfLiteStatus tflite::DepthwiseConvPrepare(TfLiteContext*, TfLiteNode*)	96	static
+kernel_util.h:253:6:void tflite::CalculateActivationRange(TfLiteFusedActivation, T*, T*) [with T = float]	0	static
+depthwise_conv_common.cc:42:17:tflite::DepthwiseParams tflite::DepthwiseConvParamsFloat(const TfLiteDepthwiseConvParams&, const tflite::OpDataConv&)	16	static

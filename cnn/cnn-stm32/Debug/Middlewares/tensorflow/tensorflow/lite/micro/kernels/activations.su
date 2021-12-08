@@ -1,0 +1,24 @@
+activations.cc:132:7:void* tflite::ops::micro::activations::ReluInit(TfLiteContext*, const char*, size_t)	8	static
+activations.cc:195:7:void* tflite::ops::micro::activations::Relu6Init(TfLiteContext*, const char*, size_t)	8	static
+activations.cc:137:14:TfLiteStatus tflite::ops::micro::activations::ReluPrepare(TfLiteContext*, TfLiteNode*)	104	static
+activations.cc:264:20:TfLiteRegistration tflite::ops::micro::Register_RELU()	12	static
+activations.cc:275:20:TfLiteRegistration tflite::ops::micro::Register_RELU6()	12	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = float]	8	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = float]	0	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = signed char]	8	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = signed char]	0	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = unsigned char]	8	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = unsigned char]	0	static
+activations.cc:220:14:TfLiteStatus tflite::ops::micro::activations::Relu6Eval(TfLiteContext*, TfLiteNode*)	168	static
+micro_utils.h:35:3:T tflite::FloatToQuantizedType(float, float, int) [with T = signed char]	32	static
+micro_utils.h:35:3:T tflite::FloatToQuantizedType(float, float, int) [with T = unsigned char]	32	static
+activations.cc:200:14:TfLiteStatus tflite::ops::micro::activations::Relu6Prepare(TfLiteContext*, TfLiteNode*)	24	static
+fixedpoint.h:64:10:tRawType gemmlowp::Dup(typename gemmlowp::FixedPointRawTypeTraits<tRawType>::ScalarRawType) [with tRawType = long int]	0	static
+fixedpoint.h:70:14:tIntegerType gemmlowp::BitAnd(tIntegerType, tIntegerType) [with tIntegerType = long int]	0	static
+fixedpoint.h:140:14:tIntegerType gemmlowp::ShiftRight(tIntegerType, int) [with tIntegerType = long int]	0	static
+fixedpoint.h:94:14:tIntegerType gemmlowp::Add(tIntegerType, tIntegerType) [with tIntegerType = long int]	0	static
+fixedpoint.h:88:14:tIntegerType gemmlowp::BitNot(tIntegerType) [with tIntegerType = long int]	0	static
+fixedpoint.h:156:14:tIntegerType gemmlowp::MaskIfNonZero(tIntegerType) [with tIntegerType = long int]	8	static
+fixedpoint.h:199:14:tIntegerType gemmlowp::MaskIfLessThan(tIntegerType, tIntegerType) [with tIntegerType = long int]	8	static
+fixedpoint.h:185:14:tIntegerType gemmlowp::MaskIfGreaterThan(tIntegerType, tIntegerType) [with tIntegerType = long int]	8	static
+activations.cc:155:14:TfLiteStatus tflite::ops::micro::activations::ReluEval(TfLiteContext*, TfLiteNode*)	216	static

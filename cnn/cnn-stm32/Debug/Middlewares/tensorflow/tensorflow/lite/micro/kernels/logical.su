@@ -1,0 +1,10 @@
+logical.cc:62:6:bool tflite::ops::micro::logical::{anonymous}::LogicalOr(bool, bool)	0	static
+logical.cc:68:6:bool tflite::ops::micro::logical::{anonymous}::LogicalAnd(bool, bool)	0	static
+logical.cc:77:20:TfLiteRegistration tflite::ops::micro::Register_LOGICAL_OR()	8	static
+logical.cc:90:20:TfLiteRegistration tflite::ops::micro::Register_LOGICAL_AND()	8	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = bool]	8	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = bool]	0	static
+binary_function.h:30:13:void tflite::reference_ops::BroadcastBinaryFunction4DSlow(const tflite::RuntimeShape&, const T1*, const tflite::RuntimeShape&, const T2*, const tflite::RuntimeShape&, R*, R (*)(T1, T2)) [with R = bool; T1 = bool; T2 = bool]	176	static
+logical.cc:32:14:TfLiteStatus tflite::ops::micro::logical::{anonymous}::LogicalImpl(TfLiteContext*, TfLiteNode*, bool (*)(bool, bool))	192	static
+logical.cc:64:14:TfLiteStatus tflite::ops::micro::logical::{anonymous}::LogicalOrEval(TfLiteContext*, TfLiteNode*)	8	static
+logical.cc:70:14:TfLiteStatus tflite::ops::micro::logical::{anonymous}::LogicalAndEval(TfLiteContext*, TfLiteNode*)	8	static

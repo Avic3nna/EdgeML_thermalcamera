@@ -1,0 +1,5 @@
+shape.cc:31:6:void tflite::{anonymous}::ExtractShape(const TfLiteEvalTensor*, int32_t*)	4	static
+shape.cc:37:14:TfLiteStatus tflite::{anonymous}::Prepare(TfLiteContext*, TfLiteNode*)	32	static
+shape.cc:62:20:TfLiteRegistration tflite::Register_SHAPE()	12	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = long int]	0	static
+shape.cc:44:14:TfLiteStatus tflite::{anonymous}::Eval(TfLiteContext*, TfLiteNode*)	16	static

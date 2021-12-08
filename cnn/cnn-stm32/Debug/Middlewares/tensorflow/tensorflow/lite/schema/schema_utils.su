@@ -1,0 +1,8 @@
+schema_utils.cc:54:17:tflite::BuiltinOperator tflite::GetBuiltinCode(const tflite::OperatorCodeT*)	16	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = long int]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = long int]	8	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = short unsigned int]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = short unsigned int]	8	static
+base.h:380:24:T flatbuffers::EndianScalar(T) [with T = signed char]	0	static
+base.h:391:3:T flatbuffers::ReadScalar(const void*) [with T = signed char]	8	static
+schema_utils.cc:45:17:tflite::BuiltinOperator tflite::GetBuiltinCode(const tflite::OperatorCode*)	24	static

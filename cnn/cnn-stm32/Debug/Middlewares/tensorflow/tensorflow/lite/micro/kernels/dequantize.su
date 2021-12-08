@@ -1,0 +1,8 @@
+dequantize.cc:41:7:void* tflite::ops::micro::dequantize::Init(TfLiteContext*, const char*, size_t)	8	static
+dequantize.cc:46:14:TfLiteStatus tflite::ops::micro::dequantize::Prepare(TfLiteContext*, TfLiteNode*)	48	static
+dequantize.cc:126:20:TfLiteRegistration tflite::ops::micro::Register_DEQUANTIZE()	12	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = unsigned char]	8	static
+kernel_util.h:55:4:T* tflite::micro::GetTensorData(TfLiteEvalTensor*) [with T = float]	0	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = signed char]	8	static
+kernel_util.h:61:10:const T* tflite::micro::GetTensorData(const TfLiteEvalTensor*) [with T = short int]	8	static
+dequantize.cc:78:14:TfLiteStatus tflite::ops::micro::dequantize::Eval(TfLiteContext*, TfLiteNode*)	176	static

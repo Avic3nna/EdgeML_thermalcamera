@@ -1,11 +1,11 @@
 Src/system_stm32f4xx.o: ../Src/system_stm32f4xx.c \
  /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h \
  /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h \
- /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Drivers/CMSIS/Include/core_cm4.h \
- /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Drivers/CMSIS/Include/cmsis_version.h \
- /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Drivers/CMSIS/Include/cmsis_compiler.h \
- /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Drivers/CMSIS/Include/cmsis_gcc.h \
- /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Drivers/CMSIS/Include/mpu_armv7.h \
+ /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/third_party/cmsis/CMSIS/Core/Include/core_cm4.h \
+ /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/third_party/cmsis/CMSIS/Core/Include/cmsis_version.h \
+ /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/third_party/cmsis/CMSIS/Core/Include/cmsis_compiler.h \
+ /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/third_party/cmsis/CMSIS/Core/Include/cmsis_gcc.h \
+ /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/third_party/cmsis/CMSIS/Core/Include/mpu_armv7.h \
  /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Inc/stm32f4xx_hal_conf.h \
@@ -41,15 +41,15 @@ Src/system_stm32f4xx.o: ../Src/system_stm32f4xx.c \
 
 /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h:
 
-/home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Drivers/CMSIS/Include/core_cm4.h:
+/home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/third_party/cmsis/CMSIS/Core/Include/core_cm4.h:
 
-/home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Drivers/CMSIS/Include/cmsis_version.h:
+/home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/third_party/cmsis/CMSIS/Core/Include/cmsis_version.h:
 
-/home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Drivers/CMSIS/Include/cmsis_compiler.h:
+/home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/third_party/cmsis/CMSIS/Core/Include/cmsis_compiler.h:
 
-/home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Drivers/CMSIS/Include/cmsis_gcc.h:
+/home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/third_party/cmsis/CMSIS/Core/Include/cmsis_gcc.h:
 
-/home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Drivers/CMSIS/Include/mpu_armv7.h:
+/home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/third_party/cmsis/CMSIS/Core/Include/mpu_armv7.h:
 
 /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h:
 
