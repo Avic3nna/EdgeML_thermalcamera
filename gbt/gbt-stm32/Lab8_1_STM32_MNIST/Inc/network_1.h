@@ -2,12 +2,12 @@
   ******************************************************************************
   * @file    network_1.h
   * @author  AST Embedded Analytics Research Platform
-  * @date    Mon Nov 29 11:17:40 2021
+  * @date    Wed Dec  8 14:32:23 2021
   * @brief   AI Tool Automatic Code Generator for Embedded NN computing
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2018 STMicroelectronics.
+  * Copyright (c) 2021 STMicroelectronics.
   * All rights reserved.
   *
   * This software component is licensed by ST under Ultimate Liberty license
@@ -18,42 +18,59 @@
   ******************************************************************************
   */
 
-#ifndef __AI_NETWORK_1_H__
-#define __AI_NETWORK_1_H__
+#ifndef AI_NETWORK_1_H
+#define AI_NETWORK_1_H
 #pragma once
 
+#include "network_1_config.h"
 #include "ai_platform.h"
-#include "ai_platform_interface.h"
 
+/******************************************************************************/
 #define AI_NETWORK_1_MODEL_NAME          "network_1"
+#define AI_NETWORK_1_ORIGIN_MODEL_NAME   "feature_extractor_conv4"
 
+/******************************************************************************/
 #define AI_NETWORK_1_ACTIVATIONS_ALIGNMENT   (4)
 
-#define AI_NETWORK_1_IN_NUM       (1)
+
+
+/******************************************************************************/
+#define AI_NETWORK_1_IN_NUM        (1)
 #define AI_NETWORK_1_IN { \
-  AI_BUFFER_OBJ_INIT(AI_BUFFER_FORMAT_FLOAT, 28, 28, 1, 1, NULL), \
+  AI_BUFFER_OBJ_INIT(AI_BUFFER_FORMAT_FLOAT, 32, 32, 1, 1, NULL), \
 }
 #define AI_NETWORK_1_IN_SIZE { \
-  (28 * 28 * 1), \
+  AI_NETWORK_1_IN_1_SIZE, \
 }
-#define AI_NETWORK_1_IN_1_SIZE  (28 * 28 * 1)
-#define AI_NETWORK_1_IN_1_SIZE_BYTES  ((28 * 28 * 1) * 4)
+#define AI_NETWORK_1_IN_SIZE_BYTES { \
+  AI_NETWORK_1_IN_1_SIZE_BYTES, \
+}
+#define AI_NETWORK_1_IN_1_HEIGHT      (32)
+#define AI_NETWORK_1_IN_1_WIDTH       (32)
+#define AI_NETWORK_1_IN_1_CHANNEL     (1)
+#define AI_NETWORK_1_IN_1_SIZE        (32 *  32 *  1)
+#define AI_NETWORK_1_IN_1_SIZE_BYTES  (AI_NETWORK_1_IN_1_SIZE * 4)
 
-
-
-
-
-#define AI_NETWORK_1_OUT_NUM      (1)
+/******************************************************************************/
+#define AI_NETWORK_1_OUT_NUM       (1)
 #define AI_NETWORK_1_OUT { \
-  AI_BUFFER_OBJ_INIT(AI_BUFFER_FORMAT_FLOAT, 1, 1, 10, 1, NULL), \
+  AI_BUFFER_OBJ_INIT(AI_BUFFER_FORMAT_FLOAT, 1, 1, 512, 1, NULL), \
 }
 #define AI_NETWORK_1_OUT_SIZE { \
-  (1 * 1 * 10), \
+  AI_NETWORK_1_OUT_1_SIZE, \
 }
-#define AI_NETWORK_1_OUT_1_SIZE  (1 * 1 * 10)
-#define AI_NETWORK_1_OUT_1_SIZE_BYTES  ((1 * 1 * 10) * 4)
+#define AI_NETWORK_1_OUT_SIZE_BYTES { \
+  AI_NETWORK_1_OUT_1_SIZE_BYTES, \
+}
+#define AI_NETWORK_1_OUT_1_HEIGHT      (1)
+#define AI_NETWORK_1_OUT_1_WIDTH       (1)
+#define AI_NETWORK_1_OUT_1_CHANNEL     (512)
+#define AI_NETWORK_1_OUT_1_SIZE        (1 *  1 *  512)
+#define AI_NETWORK_1_OUT_1_SIZE_BYTES  (AI_NETWORK_1_OUT_1_SIZE * 4)
 
-#define AI_NETWORK_1_N_NODES (10)
+/******************************************************************************/
+#define AI_NETWORK_1_N_NODES (5)
+
 
 AI_API_DECLARE_BEGIN
 
@@ -78,12 +95,26 @@ AI_API_DECLARE_BEGIN
 /*!
  * @brief Get network library info as a datastruct.
  * @ingroup network_1
+ * @param[in] network: the handler to the network context
+ * @param[out] report a pointer to the report struct where to
+ * store network info. See @ref ai_network_report struct for details
+ * @return a boolean reporting the exit status of the API
+ */
+AI_DEPRECATED
+AI_API_ENTRY
+ai_bool ai_network_1_get_info(
+  ai_handle network, ai_network_report* report);
+
+/*!
+ * @brief Get network library report as a datastruct.
+ * @ingroup network_1
+ * @param[in] network: the handler to the network context
  * @param[out] report a pointer to the report struct where to
  * store network info. See @ref ai_network_report struct for details
  * @return a boolean reporting the exit status of the API
  */
 AI_API_ENTRY
-ai_bool ai_network_1_get_info(
+ai_bool ai_network_1_get_report(
   ai_handle network, ai_network_report* report);
 
 /*!
@@ -183,4 +214,4 @@ ai_i32 ai_network_1_forward(
 
 AI_API_DECLARE_END
 
-#endif /*__AI_NETWORK_1_H__*/
+#endif /* AI_NETWORK_1_H */

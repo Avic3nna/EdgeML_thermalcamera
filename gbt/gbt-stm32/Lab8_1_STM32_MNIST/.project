@@ -26,32 +26,35 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>Doc/network_3_generate_report.txt</name>
+			<type>1</type>
+			<location>PARENT-2-PROJECT_LOC/network_3_generate_report.txt</location>
+		</link>
+		<link>
 			<name>Doc/network_generate_report.txt</name>
 			<type>1</type>
 			<location>copy_PARENT1/network_generate_report.txt</location>
 		</link>
-		<link>
+		
+		
+		
+		
+	<link>
 			<name>Application/User/network.c</name>
 			<type>1</type>
-			<location>copy_PARENT1/Src/network.c</location>
-		</link>
-		<link>
+			<location>PARENT-2-PROJECT_LOC/Src/network.c</location>
+		</link><link>
 			<name>Application/User/network_data.c</name>
 			<type>1</type>
-			<location>copy_PARENT1/Src/network_data.c</location>
-		</link>
-	<link>
-			<name>Application/User/network_1.c</name>
-			<type>1</type>
-			<location>PARENT-2-PROJECT_LOC/Src/network_1.c</location>
+			<location>PARENT-2-PROJECT_LOC/Src/network_data.c</location>
 		</link><link>
-			<name>Application/User/network_1_data.c</name>
+			<name>Application/User/network_3.c</name>
 			<type>1</type>
-			<location>PARENT-2-PROJECT_LOC/Src/network_1_data.c</location>
+			<location>PARENT-2-PROJECT_LOC/Src/network_3.c</location>
 		</link><link>
-			<name>Doc/network_1_generate_report.txt</name>
+			<name>Application/User/network_3_data.c</name>
 			<type>1</type>
-			<location>PARENT-2-PROJECT_LOC//network_1_generate_report.txt</location>
+			<location>PARENT-2-PROJECT_LOC/Src/network_3_data.c</location>
 		</link></linkedResources>
 	<variableList>
 		<variable>

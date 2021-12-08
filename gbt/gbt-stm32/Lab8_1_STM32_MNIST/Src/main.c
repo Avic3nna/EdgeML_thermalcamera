@@ -28,6 +28,7 @@
 #include "usart.h"
 #include "gpio.h"
 #include "fmc.h"
+#include "app_x-cube-ai.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -56,10 +57,12 @@ TS_StateTypeDef ui_state;
 
 /* Global handle to reference an instantiated C-model */
 static ai_handle network = AI_HANDLE_NULL;
+static ai_handle network2 = AI_HANDLE_NULL;
 
 /* Global c-array to handle the activations buffer */
 AI_ALIGNED(32)
 static ai_u8 activations[AI_NETWORK_DATA_ACTIVATIONS_SIZE];
+static ai_u8 activations2[AI_NETWORK_DATA_ACTIVATIONS_SIZE];
 
 /* Data payload for input tensor */
 AI_ALIGNED(32)
@@ -191,6 +194,8 @@ int main(void)
   MX_SPI5_Init();
   MX_TIM1_Init();
   MX_USART1_UART_Init();
+  MX_X_CUBE_AI_Init();
+
   /* USER CODE BEGIN 2 */
 	printf("ias0360-final-project running \r\n");
 
@@ -301,6 +306,7 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
 
   /** Configure the main internal regulator output voltage
   */
@@ -334,6 +340,14 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC;
+  PeriphClkInitStruct.PLLSAI.PLLSAIN = 50;
+  PeriphClkInitStruct.PLLSAI.PLLSAIR = 2;
+  PeriphClkInitStruct.PLLSAIDivR = RCC_PLLSAIDIVR_2;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
 }
 
 /* USER CODE BEGIN 4 */
@@ -352,13 +366,20 @@ void reset_nn(ai_float *in_data, ai_float *out_data,
  */
 int aiInit(void) {
 	ai_error err;
+	ai_error err2;
 
 	/* 1 - Create an instance of the model */
-	err = ai_network_create(&network, AI_NETWORK_DATA_CONFIG /* or NULL */);
+	err = ai_mnetwork_create("network", &network, AI_NETWORK_DATA_CONFIG /* or NULL */);
+	err2 = ai_mnetwork_create("network_3", &network, AI_NETWORK_DATA_CONFIG /* or NULL */);
 	if (err.type != AI_ERROR_NONE) {
 		printf("E: AI ai_network_create error - type=%d code=%d\r\n", err.type,
 				err.code);
 		return -1;
+	};
+	if (err2.type != AI_ERROR_NONE) {
+			printf("E: AI ai_network_create error - type=%d code=%d\r\n", err2.type,
+					err2.code);
+			return -1;
 	};
 
 	/* 2 - Initialise the instance */
@@ -366,6 +387,10 @@ int aiInit(void) {
 			AI_NETWORK_DATA_WEIGHTS(ai_network_data_weights_get()),
 			AI_NETWORK_DATA_ACTIVATIONS(activations)
 	);
+	const ai_network_params params2 = AI_NETWORK_PARAMS_INIT(
+				AI_NETWORK_DATA_WEIGHTS(ai_network_3_data_weights_get()),
+				AI_NETWORK_DATA_ACTIVATIONS(activations2)
+		);
 
 	if (!ai_network_init(network, &params)) {
 		err = ai_network_get_error(network);
@@ -373,6 +398,12 @@ int aiInit(void) {
 				err.code);
 		return -1;
 	}
+	if (!ai_network_3_init(network2, &params2)) {
+			err2 = ai_network_3_get_error(network2);
+			printf("E: AI ai_network_init error - type=%d code=%d\r\n", err2.type,
+					err2.code);
+			return -1;
+		}
 
 	return 0;
 }
@@ -383,16 +414,25 @@ int aiInit(void) {
 int aiRun(const void *in_data, void *out_data) {
 	ai_i32 n_batch;
 	ai_error err;
+	ai_i32 n_batch2;
+	ai_error err2;
 
 	/* 1 - Create the AI buffer IO handlers with the default definition */
 	ai_buffer ai_input[AI_NETWORK_IN_NUM] = AI_NETWORK_IN;
 	ai_buffer ai_output[AI_NETWORK_OUT_NUM] = AI_NETWORK_OUT;
+	ai_buffer ai_input2[AI_NETWORK_3_IN_NUM] = AI_NETWORK_3_IN;
+	ai_buffer ai_output2[AI_NETWORK_3_OUT_NUM] = AI_NETWORK_3_OUT;
 
 	/* 2 - Update IO handlers with the data payload */
 	ai_input[0].n_batches = 1;
 	ai_input[0].data = AI_HANDLE_PTR(in_data);
 	ai_output[0].n_batches = 1;
 	ai_output[0].data = AI_HANDLE_PTR(out_data);
+	// TODO: Continue here!
+	ai_input2[0].n_batches = 1;
+	ai_input2[0].data = AI_HANDLE_PTR(in_data);
+	ai_output2[0].n_batches = 1;
+	ai_output2[0].data = AI_HANDLE_PTR(out_data);
 
 	/* 3 - Perform the inference */
 	n_batch = ai_network_run(network, &ai_input[0], &ai_output[0]);
