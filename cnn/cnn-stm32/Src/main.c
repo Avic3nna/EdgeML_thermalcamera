@@ -184,12 +184,6 @@ int main(void)
 	uint32_t hdl = 1; // tf handle (may not be NULL)
 	struct tflm_c_tensor_info nn_input;
 	struct tflm_c_tensor_info nn_output;
-	nn_status = tflm_c_create(g_tflm_network_model_data,
-								tensor_arena,
-								TFLM_NETWORK_TENSOR_AREA_SIZE,
-								&hdl); // create nn
-	if(nn_status)
-		_Exit(nn_status);
 
 	// Initialise BUTTON_KEY. Use BSP_PB_Init() function.
 	BSP_PB_Init(BUTTON_KEY, BUTTON_MODE_GPIO);
@@ -200,32 +194,39 @@ int main(void)
 
 	char display_str[100]; // buffer for display text
 
+	int image_idx = 0;
+
+
+	// Create nn
+	nn_status = tflm_c_create(g_tflm_network_model_data,
+								tensor_arena,
+								TFLM_NETWORK_TENSOR_AREA_SIZE,
+								&hdl); // create nn
+	if(nn_status)
+		_Exit(nn_status);
+
+
+	// Set input tensor
+	nn_status = tflm_c_input(hdl, image_idx, &nn_input);
+	if(nn_status)
+		_Exit(nn_status);
+
+	// Set output tensor
+	nn_status = tflm_c_output(hdl, image_idx, &nn_output);
+	if(nn_status)
+		_Exit(nn_status);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	int32_t image_idx = 0;
 	while (1) {
 
 		if (BSP_PB_GetState(BUTTON_KEY)) {
 			user_interface_reset();
 
-			// Reset NN variables
-			nn_status = tflm_c_reset_all_variables(hdl);
-			if(nn_status)
-				_Exit(nn_status);
 
 			nn_input.data = &X_test[image_idx][0];
-
-			// Set input tensor
-			nn_status = tflm_c_input(hdl, image_idx, &nn_input);
-			if(nn_status)
-				_Exit(nn_status);
-
-			// Set output tensor
-			nn_status = tflm_c_output(hdl, image_idx, &nn_output);
-			if(nn_status)
-				_Exit(nn_status);
 
 		    // Run inference
 		    int timer = htim1.Instance->CNT;
@@ -290,6 +291,8 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	}
+
+	// Free nn
 	nn_status = tflm_c_destroy(hdl);
 	if(nn_status)
 		_Exit(nn_status);
