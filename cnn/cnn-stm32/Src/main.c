@@ -116,7 +116,7 @@ uint8_t tensor_arena[114944]; // define arena
 
 
 // NN input (for test purpose from externally included files)
-extern float X_test[1][1024];
+extern float X_test[3][1024];
 extern int y_test[];
 
 TIM_HandleTypeDef htim1;
