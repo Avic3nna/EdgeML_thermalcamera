@@ -1,0 +1,169 @@
+{
+    "activations": 0,
+    "activations_alignment": 4,
+    "c_arrays": [
+        {
+            "c_bits": [
+                32,
+                0
+            ],
+            "c_id": 0,
+            "c_size_in_byte": 32,
+            "c_type": "const float",
+            "conv_type": "",
+            "format": "float",
+            "mem_pool": "weights",
+            "name": "conv2d_bias_array",
+            "offset": 288,
+            "size": 8,
+            "start_offset": 288,
+            "tensors": [
+                {
+                    "name": "conv2d_bias",
+                    "shape": [
+                        1,
+                        1,
+                        1,
+                        8
+                    ]
+                }
+            ]
+        },
+        {
+            "c_bits": [
+                32,
+                0
+            ],
+            "c_id": 1,
+            "c_size_in_byte": 288,
+            "c_type": "const float",
+            "conv_type": "",
+            "format": "float",
+            "mem_pool": "weights",
+            "name": "conv2d_weights_array",
+            "offset": 0,
+            "size": 72,
+            "start_offset": 0,
+            "tensors": [
+                {
+                    "name": "conv2d_weights",
+                    "shape": [
+                        1,
+                        8,
+                        3,
+                        3
+                    ]
+                }
+            ]
+        },
+        {
+            "c_bits": [
+                32,
+                0
+            ],
+            "c_id": 2,
+            "c_size_in_byte": 4096,
+            "c_type": "float",
+            "conv_type": "",
+            "format": "float",
+            "io_type": "input",
+            "mem_pool": "user",
+            "name": "input_1_output_array",
+            "offset": "NULL",
+            "size": 1024,
+            "start_offset": "NULL",
+            "tensors": [
+                {
+                    "name": "input_1_output",
+                    "shape": [
+                        1,
+                        32,
+                        32,
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "c_bits": [
+                32,
+                0
+            ],
+            "c_id": 3,
+            "c_size_in_byte": 8192,
+            "c_type": "float",
+            "conv_type": "",
+            "format": "float",
+            "io_type": "output",
+            "mem_pool": "user",
+            "name": "conv2d_output_array",
+            "offset": "NULL",
+            "size": 2048,
+            "start_offset": "NULL",
+            "tensors": [
+                {
+                    "name": "conv2d_output",
+                    "shape": [
+                        1,
+                        16,
+                        16,
+                        8
+                    ]
+                }
+            ]
+        }
+    ],
+    "c_arrays_n": 4,
+    "c_intq_n": 0,
+    "c_layers": [
+        {
+            "c_forward": "forward_conv2d",
+            "c_id": 0,
+            "m_id": 1,
+            "macc": 20488,
+            "name": "conv2d",
+            "next": "conv2d",
+            "rom": 320,
+            "tensors": {
+                "inputs": [
+                    "input_1_output"
+                ],
+                "outputs": [
+                    "conv2d_output"
+                ],
+                "scratchs": [],
+                "weights": [
+                    "conv2d_weights",
+                    "conv2d_bias"
+                ]
+            },
+            "type": "conv2d"
+        }
+    ],
+    "c_name": "network",
+    "c_nodes_n": 1,
+    "c_tensors_n": 4,
+    "date_time": "Mon Dec  6 22:25:12 2021",
+    "inputs": [
+        "input_1_output"
+    ],
+    "macc": 20488,
+    "model_name": "feature_extractor_conv_0",
+    "outputs": [
+        "conv2d_output"
+    ],
+    "params_alignment": 4,
+    "tools_api_version": {
+        "major": 1,
+        "micro": 0,
+        "minor": 3
+    },
+    "tools_version": {
+        "extra": null,
+        "major": 5,
+        "micro": 0,
+        "minor": 2
+    },
+    "version": "1.0",
+    "weights": 320
+}
