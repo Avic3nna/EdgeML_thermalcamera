@@ -40,48 +40,19 @@
 #include "stm32f429i_discovery_lcd.h"
 #include "stm32f429i_discovery_ts.h"
 
-
-
-#include "X_test.h"
+//#include "X_test.h" // 20 samples
+#include "X_test_small.h" // 1 sample
 #include "y_test.h"
 
+// tflite includes
 #include "network_config.h"
 #include "network_tflite_data.h"
-
-#include "tfm_c.h"
-
-extern float X_train[20][1024];
-extern float y_train[];
+#include "tflm_c.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 TS_StateTypeDef ui_state;
-
-/* Global handle to reference an instantiated C-model */
-// TODO: REPLACE static ai_handle network = AI_HANDLE_NULL;
-
-/* Global c-array to handle the activations buffer */
-// TODO: REPLACE AI_ALIGNED(32)
-// TODO: REPLACE static ai_u8 activations[AI_NETWORK_DATA_ACTIVATIONS_SIZE];
-
-/* Data payload for input tensor */
-// TODO: REPLACE AI_ALIGNED(32)
-// TODO: REPLACE  static ai_float in_data[AI_NETWORK_IN_1_SIZE];
-/* or static ai_u8 in_data[AI_NETWORK_IN_1_SIZE_BYTES]; */
-
-/* Data payload for the output tensor */
-// TODO: REPLACE AI_ALIGNED(32)
-// TODO: REPLACE static ai_float out_data[AI_NETWORK_OUT_1_SIZE];
-/* static ai_u8 out_data[AI_NETWORK_OUT_1_SIZE_BYTES]; */
-
-// add prediction data structure
-// TODO: REPLACE struct prediction_probability {
-// TODO: REPLACE 	ai_float prob;
-// TODO: REPLACE 	ai_u8 label;
-// TODO: REPLACE };
-
-// TODO: REPLACE typedef struct prediction_probability pred_probType;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -97,7 +68,7 @@ TS_StateTypeDef ui_state;
 #define LCD_FRAME_BUFFER_LAYER1 			LCD_FRAME_BUFFER
 #define CONVERTED_FRAME_BUFFER              (LCD_FRAME_BUFFER +0x260000)
 
-#define  PXL_SET							0.99
+// #define  PXL_SET							0.99
 // LAB8: Change number of output classes accordingly based on the MNIST model
 #define  NUM_CLASSES						2
 
@@ -140,6 +111,17 @@ GETCHAR_PROTOTYPE {
 
 /* USER CODE BEGIN PV */
 
+// const int tensor_arena_size = 114944; // raises error: variably modified 'tensor_arena' at file scope
+uint8_t tensor_arena[114944]; // define arena
+
+
+// NN input (for test purpose from externally included files)
+extern float X_test[1][1024];
+extern int y_test[];
+
+TIM_HandleTypeDef htim1;
+
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -148,10 +130,6 @@ void SystemClock_Config(void);
 void user_interface_init(void);
 void user_interface_reset(void);
 void touch_sensor_init(void);
-// Lab 8: add prototype
-// TODO: REPLACE void reset_nn(ai_float*, ai_float*, pred_probType*, pred_probType*);
-int aiInit(void);
-int aiRun(const void*, void*);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -167,6 +145,7 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 	setvbuf(stdin, NULL, _IONBF, 0);
+	TfLiteStatus nn_status;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -196,7 +175,21 @@ int main(void)
   MX_TIM1_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-	printf("ias0360-final-project running \r\n");
+    printf("ias0360-final-project running \r\n");
+
+    // Start timer/counter
+    HAL_TIM_Base_Start(&htim1);
+
+	// tflite init
+	uint32_t hdl = 1; // tf handle (may not be NULL)
+	struct tflm_c_tensor_info nn_input;
+	struct tflm_c_tensor_info nn_output;
+	nn_status = tflm_c_create(g_tflm_network_model_data,
+								tensor_arena,
+								TFLM_NETWORK_TENSOR_AREA_SIZE,
+								&hdl); // create nn
+	if(nn_status)
+		_Exit(nn_status);
 
 	// Initialise BUTTON_KEY. Use BSP_PB_Init() function.
 	BSP_PB_Init(BUTTON_KEY, BUTTON_MODE_GPIO);
@@ -205,26 +198,41 @@ int main(void)
 	user_interface_init();
 	user_interface_reset();
 
-	//TODO: FIX pred_probType _1st_pred, _2nd_pred;
-	//TODO: FIX 	_1st_pred.prob = _2nd_pred.prob = 0.0f;
-
-	char _1st_pred_str[50], _1st_pred_prob_str[50];
-
-	// Reset NN data preliminary
-	//TODO: FIX 	reset_nn(in_data, out_data, &_1st_pred, &_2nd_pred);
-
-	// Init NN
-	aiInit();
+	char display_str[100]; // buffer for display text
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	int image_idx = 0;
+	int32_t image_idx = 0;
 	while (1) {
 
 		if (BSP_PB_GetState(BUTTON_KEY)) {
 			user_interface_reset();
+
+			// Reset NN variables
+			nn_status = tflm_c_reset_all_variables(hdl);
+			if(nn_status)
+				_Exit(nn_status);
+
+			nn_input.data = &X_test[image_idx][0];
+
+			// Set input tensor
+			nn_status = tflm_c_input(hdl, image_idx, &nn_input);
+			if(nn_status)
+				_Exit(nn_status);
+
+			// Set output tensor
+			nn_status = tflm_c_output(hdl, image_idx, &nn_output);
+			if(nn_status)
+				_Exit(nn_status);
+
+		    // Run inference
+		    uint32_t timestamp = htim1.Instance->CNT;
+			nn_status = tflm_c_invoke(hdl);
+			float nn_timer = (float)(htim1.Instance->CNT - timestamp);
+			if(nn_status)
+				_Exit(nn_status);
 
 			// Show image
 			int color = 0xFFFFFFFF;
@@ -239,56 +247,33 @@ int main(void)
 					}
 					else {
 						// shift to the RR Position of BBRRGGBB
-						color = 0xFF000000 | (repr_data << 16);
+						color = 0xFF | (repr_data << 16);
 					}
 					BSP_LCD_SetTextColor(color);
 					BSP_LCD_FillRect(64+(x*4), 64+(y*4), 4, 4);
 				}
 			}
 
-			// Execute inference
-			//TODO: FIX
-			// aiRun(in_data, out_data);
-
-			for (int i = 0; i < NUM_CLASSES; i++) {
-				//TODO: FIX
-//				if (_1st_pred.prob < out_data[i]) {
-//					_2nd_pred.label = _1st_pred.label;
-//					_2nd_pred.prob = _1st_pred.prob;
-//					_1st_pred.prob = out_data[i];
-//					_1st_pred.label = i;
-//
-//				} else if (_2nd_pred.prob < out_data[i]) {
-//					_2nd_pred.label = i;
-//					_2nd_pred.prob = out_data[i];
-//				}
-			}
-
-//			printf("NN First Guess: %d  %f \n\r", _1st_pred.label,
-//					_1st_pred.prob);
-//			printf("NN Second Guess: %d  %f \n\r", _2nd_pred.label,
-//					_2nd_pred.prob);
-
 			// Set display for NN output
 			BSP_LCD_SetTextColor(LCD_COLOR_RED);
 			BSP_LCD_SetFont(&Font20);
 			BSP_LCD_SetBackColor(LCD_COLOR_LIGHTCYAN);
 
-			// TODO: Display predicted class
-			//sprintf(_1st_pred_str, "Pred.: %d", _1st_pred.label);
-			BSP_LCD_DisplayStringAt(10, 240, (uint8_t*) _1st_pred_str, CENTER_MODE);
+			// Display predicted class
+			sprintf(display_str, "Pred.: %d", 0);
+			BSP_LCD_DisplayStringAt(10, 240, (uint8_t*) display_str, CENTER_MODE);
 
 			// Display real class
-			sprintf(_1st_pred_str, "Truth: %d", y_test[image_idx]);
-			BSP_LCD_DisplayStringAt(10, 260, (uint8_t*) _1st_pred_str, CENTER_MODE);
+			sprintf(display_str, "Truth: %d", y_test[image_idx]);
+			BSP_LCD_DisplayStringAt(10, 260, (uint8_t*) display_str, CENTER_MODE);
 
-			// TODO: Display inference time
-			//sprintf(_1st_pred_str, "Time: %.1f", _1st_pred.prob);
-			BSP_LCD_DisplayStringAt(10, 280, (uint8_t*) _1st_pred_str, CENTER_MODE);
+			// Display inference time
+			sprintf(display_str, "Time: %.2f", nn_timer);
+			BSP_LCD_DisplayStringAt(10, 280, (uint8_t*) display_str, CENTER_MODE);
 
-			// count to next image and start from 0 when at the end
+			// Count up sample index and start from 0 when at the end
 			image_idx += 1;
-			image_idx %= 20;
+			image_idx %= N_SAMPLES;
 
 		}
 
@@ -296,6 +281,9 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	}
+	nn_status = tflm_c_destroy(hdl);
+	if(nn_status)
+		_Exit(nn_status);
   /* USER CODE END 3 */
 }
 
@@ -344,30 +332,11 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 
-//TODO: FIX
-// Reset function
-//void reset_nn(ai_float *in_data, ai_float *out_data,
-//		pred_probType *_1st_pred, pred_probType *_2nd_pred) {
-//	memset(in_data, 0.0, sizeof(in_data[0]) * AI_NETWORK_IN_1_SIZE);
-//	memset(out_data, 0.0, sizeof(out_data[0]) * AI_NETWORK_OUT_1_SIZE);
-//	_2nd_pred->label = _2nd_pred->prob = _1st_pred->label = _1st_pred->prob =
-//			0.0;
-//}
-
 /*
- * Bootstrap code
+ * Implements TF lite micro debug output
  */
-int aiInit(void) {
-
-
-	return 0;
-}
-
-/*
- * Run inference code
- */
-int aiRun(const void *in_data, void *out_data) {
-
+int tflm_io_write(const void *buff, uint16_t count){
+	printf("'%.100s'\n",  (char *) buff);
 	return 0;
 }
 
@@ -449,19 +418,6 @@ void user_interface_reset(void) {
 
 	// Set text color to blue
 	BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
-
-	// Write clear button area, marked with "C". Draw filled rectangle to position x,y = (5, 285) with dimensions = (230, 30)
-	// BSP_LCD_FillRect(5, 285, 230, 30);
-
-	// Set text color to white
-	// BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
-
-
-	// Set background color as blue
-	// BSP_LCD_SetBackColor(LCD_COLOR_BLUE);
-
-	// Set text color as black
-	// BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
 
 	printf("LCD Interface INIT successful \r\n");
 }

@@ -11,8 +11,8 @@ Middlewares/tensorflow/tensorflow/lite/micro/kernels/cmsis_nn/mul.o: \
  /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/tensorflow/lite/kernels/op_macros.h \
  /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Include/arm_nnfunctions.h \
  /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/third_party/cmsis/CMSIS/DSP/Include/arm_math_types.h \
- /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Drivers/CMSIS/Include/cmsis_compiler.h \
- /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Drivers/CMSIS/Include/cmsis_gcc.h \
+ /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/third_party/cmsis/CMSIS/Core/Include/cmsis_compiler.h \
+ /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/third_party/cmsis/CMSIS/Core/Include/cmsis_gcc.h \
  /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Include/arm_nn_types.h \
  /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/tensorflow/lite/kernels/internal/quantization_util.h \
  /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/tensorflow/lite/kernels/internal/reference/integer_ops/mul.h \
@@ -53,9 +53,9 @@ Middlewares/tensorflow/tensorflow/lite/micro/kernels/cmsis_nn/mul.o: \
 
 /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/third_party/cmsis/CMSIS/DSP/Include/arm_math_types.h:
 
-/home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Drivers/CMSIS/Include/cmsis_compiler.h:
+/home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/third_party/cmsis/CMSIS/Core/Include/cmsis_compiler.h:
 
-/home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Drivers/CMSIS/Include/cmsis_gcc.h:
+/home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/third_party/cmsis/CMSIS/Core/Include/cmsis_gcc.h:
 
 /home/weiss/git/ias0360-final-project/cnn/cnn-stm32/Middlewares/tensorflow/third_party/cmsis/CMSIS/NN/Include/arm_nn_types.h:
 
