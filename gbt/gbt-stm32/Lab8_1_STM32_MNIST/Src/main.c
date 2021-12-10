@@ -75,8 +75,7 @@ static ai_float in_data2[AI_NETWORK_3_IN_1_SIZE];
 /* Data payload for the output tensor */
 AI_ALIGNED(32)
 static ai_float out_data[AI_NETWORK_OUT_1_SIZE];
-static ai_float out_data2_1[AI_NETWORK_3_OUT_1_SIZE];
-static ai_float out_data2_2[AI_NETWORK_3_OUT_2_SIZE];
+static ai_float out_data2[AI_NETWORK_3_OUT_1_SIZE];
 /* static ai_u8 out_data[AI_NETWORK_OUT_1_SIZE_BYTES]; */
 
 // add prediction data structure
@@ -153,9 +152,9 @@ void user_interface_init(void);
 void user_interface_reset(void);
 void touch_sensor_init(void);
 // Lab 8: add prototype
-void reset_nn(ai_float*, ai_float*,ai_float*, ai_float*,ai_float*, pred_probType*, pred_probType*);
+void reset_nn(ai_float*, ai_float*,ai_float*, ai_float*, pred_probType*, pred_probType*);
 int aiInit(void);
-int aiRun(const void*, void*, void*, void*, void*);
+int aiRun(const void*, void*, void*, void*);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -216,7 +215,7 @@ int main(void)
 	char _1st_pred_str[50], _1st_pred_prob_str[50];
 
 	// Reset NN data preliminary
-	reset_nn(in_data, out_data, in_data2, out_data2_1, out_data2_2, &_1st_pred, &_2nd_pred);
+	reset_nn(in_data, out_data, in_data2, out_data2, &_1st_pred, &_2nd_pred);
 
 	// Init NN
 	aiInit();
@@ -253,7 +252,7 @@ int main(void)
 
 			// Execute inference
 			// TODO: Continue here!
-			aiRun(X_test[image_idx], out_data, in_data2, out_data2_1, out_data2_2);
+			aiRun(X_test[image_idx], out_data, in_data2, out_data2);
 
 			for (int i = 0; i < NUM_CLASSES; i++) {
 				if (_1st_pred.prob < out_data2[i]) {
@@ -358,13 +357,12 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 
 // Reset function
-void reset_nn(ai_float *in_data, ai_float *out_data, ai_float *in_data2, ai_float *out_data2_1, ai_float *out_data2_2,
+void reset_nn(ai_float *in_data, ai_float *out_data, ai_float *in_data2, ai_float *out_data2,
 		pred_probType *_1st_pred, pred_probType *_2nd_pred) {
 	memset(in_data, 0.0, sizeof(in_data[0]) * AI_NETWORK_IN_1_SIZE);
 	memset(out_data, 0.0, sizeof(out_data[0]) * AI_NETWORK_OUT_1_SIZE);
 	memset(in_data2, 0.0, sizeof(in_data2[0]) * AI_NETWORK_3_IN_1_SIZE);
-	memset(out_data2_1, 0.0, sizeof(out_data2_1[0]) * AI_NETWORK_3_OUT_1_SIZE);
-	memset(out_data2_2, 0.0, sizeof(out_data2_2[0]) * AI_NETWORK_3_OUT_2_SIZE);
+	memset(out_data2, 0.0, sizeof(out_data2[0]) * AI_NETWORK_3_OUT_1_SIZE);
 	_2nd_pred->label = _2nd_pred->prob = _1st_pred->label = _1st_pred->prob =
 			0.0;
 }
@@ -419,7 +417,7 @@ int aiInit(void) {
 /*
  * Run inference code
  */
-int aiRun(const void *in_data, void *out_data, void *in_data2, void *out_data2_1,void *out_data2_2) {
+int aiRun(const void *in_data, void *out_data, void *in_data2, void *out_data2) {
 	ai_i32 n_batch;
 	ai_error err;
 	ai_i32 n_batch2;
@@ -439,7 +437,7 @@ int aiRun(const void *in_data, void *out_data, void *in_data2, void *out_data2_1
 	ai_input2[0].n_batches = 1;
 	ai_input2[0].data = AI_HANDLE_PTR(in_data2);
 	ai_output2[0].n_batches = 1;
-	ai_output2[0].data = AI_HANDLE_PTR(out_data2_1);
+	ai_output2[0].data = AI_HANDLE_PTR(out_data2);
 
 	/* 3 - Perform the inference */
 	n_batch = ai_mnetwork_run(network, &ai_input[0], &ai_output[0]);

@@ -11,13 +11,13 @@
             "format": "float",
             "io_type": "input",
             "mem_pool": "user",
-            "name": "conv2d_14_input_output_array",
+            "name": "conv2d_4_input_output_array",
             "offset": "NULL",
             "size": 1024,
             "start_offset": "NULL",
             "tensors": [
                 {
-                    "name": "conv2d_14_input_output",
+                    "name": "conv2d_4_input_output",
                     "shape": [
                         1,
                         32,
@@ -403,7 +403,7 @@
             "rom": 160,
             "tensors": {
                 "inputs": [
-                    "conv2d_14_input_output"
+                    "conv2d_4_input_output"
                 ],
                 "outputs": [
                     "conv2d_0_output"
@@ -514,9 +514,9 @@
     "c_weights_count": 1,
     "c_weights_header": 0,
     "data_alignment": 4,
-    "date_time": "Wed Dec  8 22:06:32 2021",
+    "date_time": "Fri Dec 10 18:20:58 2021",
     "inputs": [
-        "conv2d_14_input_output"
+        "conv2d_4_input_output"
     ],
     "macc": 78780,
     "memory_footprint": {
