@@ -112,7 +112,7 @@ GETCHAR_PROTOTYPE {
 /* USER CODE BEGIN PV */
 
 // const int tensor_arena_size = 114944; // raises error: variably modified 'tensor_arena' at file scope
-uint8_t tensor_arena[114944]; // define arena
+uint8_t tensor_arena[TFLM_NETWORK_TENSOR_AREA_SIZE]; // define arena
 
 
 // NN input (for test purpose from externally included files)
