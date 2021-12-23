@@ -16,8 +16,12 @@ Presentation: 13.12.2021
     
 Final paper: 07.01.2021 23:59
 
-## Report
+## Papers
+### Proposal
 https://www.overleaf.com/project/617665ffbc94254cf8ec4a41
+
+### Final paper
+https://www.overleaf.com/project/6188f27ebcae56e529194e55
 
 ## Presentation
 https://docs.google.com/presentation/d/1TLgBtyyDolK1EsZuQ53GfDV2xGOMiX9MA92Uc6CJ1BQ/edit?usp=sharing
