@@ -28,6 +28,7 @@
 #include "usart.h"
 #include "gpio.h"
 #include "fmc.h"
+#include "app_x-cube-ai.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -42,6 +43,8 @@
 
 #include "network.h"
 #include "network_data.h"
+#include "network_3.h"
+#include "network_3_data.h"
 
 #include "X_test.h"
 #include "y_test.h"
@@ -56,19 +59,23 @@ TS_StateTypeDef ui_state;
 
 /* Global handle to reference an instantiated C-model */
 static ai_handle network = AI_HANDLE_NULL;
+static ai_handle network2 = AI_HANDLE_NULL;
 
 /* Global c-array to handle the activations buffer */
 AI_ALIGNED(32)
 static ai_u8 activations[AI_NETWORK_DATA_ACTIVATIONS_SIZE];
+static ai_u8 activations2[AI_NETWORK_DATA_ACTIVATIONS_SIZE];
 
 /* Data payload for input tensor */
 AI_ALIGNED(32)
 static ai_float in_data[AI_NETWORK_IN_1_SIZE];
+static ai_float in_data2[AI_NETWORK_3_IN_1_SIZE];
 /* or static ai_u8 in_data[AI_NETWORK_IN_1_SIZE_BYTES]; */
 
 /* Data payload for the output tensor */
 AI_ALIGNED(32)
 static ai_float out_data[AI_NETWORK_OUT_1_SIZE];
+static ai_float out_data2[AI_NETWORK_3_OUT_1_SIZE];
 /* static ai_u8 out_data[AI_NETWORK_OUT_1_SIZE_BYTES]; */
 
 // add prediction data structure
@@ -95,7 +102,7 @@ typedef struct prediction_probability pred_probType;
 
 #define  PXL_SET							0.99
 // LAB8: Change number of output classes accordingly based on the MNIST model
-#define  NUM_CLASSES						10
+#define  NUM_CLASSES						1
 
 // LAB7: Add USART prototype for printf (described in lecture 9 materials)
 #ifdef __GNUC__
@@ -145,9 +152,9 @@ void user_interface_init(void);
 void user_interface_reset(void);
 void touch_sensor_init(void);
 // Lab 8: add prototype
-void reset_nn(ai_float*, ai_float*, pred_probType*, pred_probType*);
+void reset_nn(ai_float*, ai_float*,ai_float*, ai_float*, pred_probType*, pred_probType*);
 int aiInit(void);
-int aiRun(const void*, void*);
+int aiRun(const void*, void*, void*, void*);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -191,6 +198,7 @@ int main(void)
   MX_SPI5_Init();
   MX_TIM1_Init();
   MX_USART1_UART_Init();
+
   /* USER CODE BEGIN 2 */
 	printf("ias0360-final-project running \r\n");
 
@@ -207,7 +215,7 @@ int main(void)
 	char _1st_pred_str[50], _1st_pred_prob_str[50];
 
 	// Reset NN data preliminary
-	reset_nn(in_data, out_data, &_1st_pred, &_2nd_pred);
+	reset_nn(in_data, out_data, in_data2, out_data2, &_1st_pred, &_2nd_pred);
 
 	// Init NN
 	aiInit();
@@ -243,18 +251,19 @@ int main(void)
 			}
 
 			// Execute inference
-			aiRun(in_data, out_data);
+			// TODO: Continue here!
+			aiRun(X_test[image_idx], out_data, in_data2, out_data2);
 
 			for (int i = 0; i < NUM_CLASSES; i++) {
-				if (_1st_pred.prob < out_data[i]) {
+				if (_1st_pred.prob < out_data2[i]) {
 					_2nd_pred.label = _1st_pred.label;
 					_2nd_pred.prob = _1st_pred.prob;
-					_1st_pred.prob = out_data[i];
+					_1st_pred.prob = out_data2[i];
 					_1st_pred.label = i;
 
-				} else if (_2nd_pred.prob < out_data[i]) {
+				} else if (_2nd_pred.prob < out_data2[i]) {
 					_2nd_pred.label = i;
-					_2nd_pred.prob = out_data[i];
+					_2nd_pred.prob = out_data2[i];
 				}
 			}
 
@@ -301,6 +310,7 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
 
   /** Configure the main internal regulator output voltage
   */
@@ -334,15 +344,25 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC;
+  PeriphClkInitStruct.PLLSAI.PLLSAIN = 50;
+  PeriphClkInitStruct.PLLSAI.PLLSAIR = 2;
+  PeriphClkInitStruct.PLLSAIDivR = RCC_PLLSAIDIVR_2;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
 }
 
 /* USER CODE BEGIN 4 */
 
 // Reset function
-void reset_nn(ai_float *in_data, ai_float *out_data,
+void reset_nn(ai_float *in_data, ai_float *out_data, ai_float *in_data2, ai_float *out_data2,
 		pred_probType *_1st_pred, pred_probType *_2nd_pred) {
 	memset(in_data, 0.0, sizeof(in_data[0]) * AI_NETWORK_IN_1_SIZE);
 	memset(out_data, 0.0, sizeof(out_data[0]) * AI_NETWORK_OUT_1_SIZE);
+	memset(in_data2, 0.0, sizeof(in_data2[0]) * AI_NETWORK_3_IN_1_SIZE);
+	memset(out_data2, 0.0, sizeof(out_data2[0]) * AI_NETWORK_3_OUT_1_SIZE);
 	_2nd_pred->label = _2nd_pred->prob = _1st_pred->label = _1st_pred->prob =
 			0.0;
 }
@@ -352,13 +372,20 @@ void reset_nn(ai_float *in_data, ai_float *out_data,
  */
 int aiInit(void) {
 	ai_error err;
+	ai_error err2;
 
 	/* 1 - Create an instance of the model */
-	err = ai_network_create(&network, AI_NETWORK_DATA_CONFIG /* or NULL */);
+	err = ai_mnetwork_create("network", &network, AI_NETWORK_DATA_CONFIG /* or NULL */);
+	err2 = ai_mnetwork_create("network_3", &network2, AI_NETWORK_3_DATA_CONFIG /* or NULL */);
 	if (err.type != AI_ERROR_NONE) {
 		printf("E: AI ai_network_create error - type=%d code=%d\r\n", err.type,
 				err.code);
 		return -1;
+	};
+	if (err2.type != AI_ERROR_NONE) {
+			printf("E: AI ai_network2_create error - type=%d code=%d\r\n", err2.type,
+					err2.code);
+			return -1;
 	};
 
 	/* 2 - Initialise the instance */
@@ -366,13 +393,23 @@ int aiInit(void) {
 			AI_NETWORK_DATA_WEIGHTS(ai_network_data_weights_get()),
 			AI_NETWORK_DATA_ACTIVATIONS(activations)
 	);
+	const ai_network_params params2 = AI_NETWORK_PARAMS_INIT(
+				AI_NETWORK_DATA_WEIGHTS(ai_network_3_data_weights_get()),
+				AI_NETWORK_DATA_ACTIVATIONS(activations2)
+		);
 
-	if (!ai_network_init(network, &params)) {
-		err = ai_network_get_error(network);
+	if (!ai_mnetwork_init(network, &params)) {
+		err = ai_mnetwork_get_error(network);
 		printf("E: AI ai_network_init error - type=%d code=%d\r\n", err.type,
 				err.code);
 		return -1;
 	}
+	if (!ai_mnetwork_init(network2, &params2)) {
+			err2 = ai_mnetwork_get_error(network2);
+			printf("E: AI ai_network2_init error - type=%d code=%d\r\n", err2.type,
+					err2.code);
+			return -1;
+		}
 
 	return 0;
 }
@@ -380,28 +417,44 @@ int aiInit(void) {
 /*
  * Run inference code
  */
-int aiRun(const void *in_data, void *out_data) {
+int aiRun(const void *in_data, void *out_data, void *in_data2, void *out_data2) {
 	ai_i32 n_batch;
 	ai_error err;
+	ai_i32 n_batch2;
+	ai_error err2;
 
 	/* 1 - Create the AI buffer IO handlers with the default definition */
 	ai_buffer ai_input[AI_NETWORK_IN_NUM] = AI_NETWORK_IN;
 	ai_buffer ai_output[AI_NETWORK_OUT_NUM] = AI_NETWORK_OUT;
+	ai_buffer ai_input2[AI_NETWORK_3_IN_NUM] = AI_NETWORK_3_IN;
+	ai_buffer ai_output2[AI_NETWORK_3_OUT_NUM] = AI_NETWORK_3_OUT;
 
 	/* 2 - Update IO handlers with the data payload */
 	ai_input[0].n_batches = 1;
 	ai_input[0].data = AI_HANDLE_PTR(in_data);
 	ai_output[0].n_batches = 1;
 	ai_output[0].data = AI_HANDLE_PTR(out_data);
+	ai_input2[0].n_batches = 1;
+	ai_input2[0].data = AI_HANDLE_PTR(in_data2);
+	ai_output2[0].n_batches = 1;
+	ai_output2[0].data = AI_HANDLE_PTR(out_data2);
 
 	/* 3 - Perform the inference */
-	n_batch = ai_network_run(network, &ai_input[0], &ai_output[0]);
+	n_batch = ai_mnetwork_run(network, &ai_input[0], &ai_output[0]);
 	if (n_batch != 1) {
-		err = ai_network_get_error(network);
+		err = ai_mnetwork_get_error(network);
 		printf("E: AI ai_network_run error - type=%d code=%d\r\n", err.type,
 				err.code);
 		return -1;
 	};
+
+	n_batch2 = ai_mnetwork_run(network2, &ai_input2[0], &ai_output2[0]);
+		if (n_batch2 != 1) {
+			err2 = ai_mnetwork_get_error(network2);
+			printf("E: AI ai_network_2_run error - type=%d code=%d\r\n", err2.type,
+					err2.code);
+			return -1;
+		};
 
 	return 0;
 }
