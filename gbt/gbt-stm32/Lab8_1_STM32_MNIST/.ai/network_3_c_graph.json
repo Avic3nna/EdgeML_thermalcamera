@@ -80,21 +80,21 @@
         {
             "c_bits": 32,
             "c_id": 3,
-            "c_size_in_byte": 236,
+            "c_size_in_byte": 396,
             "c_type": "const float",
             "conv_type": "",
             "format": "float",
             "mem_pool": "weights",
             "name": "label_coefficients_array",
             "offset": "NULL",
-            "size": 59,
+            "size": 99,
             "start_offset": "NULL",
             "tensors": [
                 {
                     "name": "label_coefficients",
                     "shape": [
                         1,
-                        59,
+                        99,
                         1,
                         1
                     ]
@@ -104,21 +104,21 @@
         {
             "c_bits": 32,
             "c_id": 4,
-            "c_size_in_byte": 120832,
+            "c_size_in_byte": 202752,
             "c_type": "const float",
             "conv_type": "",
             "format": "float",
             "mem_pool": "weights",
             "name": "label_support_vectors_array",
             "offset": "NULL",
-            "size": 30208,
+            "size": 50688,
             "start_offset": "NULL",
             "tensors": [
                 {
                     "name": "label_support_vectors",
                     "shape": [
                         1,
-                        30208,
+                        50688,
                         1,
                         1
                     ]
@@ -206,10 +206,10 @@
             "c_id": 0,
             "layer_type": "svc",
             "m_id": 0,
-            "macc": 302080,
+            "macc": 506880,
             "name": "label",
             "next": "label",
-            "rom": 121080,
+            "rom": 203160,
             "tensors": {
                 "inputs": [
                     "X_output"
@@ -235,11 +235,11 @@
     "c_weights_count": 1,
     "c_weights_header": 0,
     "data_alignment": 4,
-    "date_time": "Fri Dec 10 18:21:04 2021",
+    "date_time": "Wed Jan  5 17:03:26 2022",
     "inputs": [
         "X_output"
     ],
-    "macc": 302080,
+    "macc": 506880,
     "memory_footprint": {
         "activations": 0,
         "io": [
@@ -247,7 +247,7 @@
             12
         ],
         "series": "generic",
-        "weights": 121080
+        "weights": 203160
     },
     "model_name": "simple_svc_clf",
     "outputs": [
@@ -272,5 +272,5 @@
         "minor": 5
     },
     "version": "1.1",
-    "weights": 121080
+    "weights": 203160
 }
